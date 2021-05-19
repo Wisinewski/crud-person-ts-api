@@ -4,7 +4,7 @@ export type PersonModel = {
   cpf: string
   dataNascimento: string
   paisNascimento: string
-  estadosNascimento: string
+  estadoNascimento: string
   cidadeNascimento: string
   email: string
   nomePai?: string
