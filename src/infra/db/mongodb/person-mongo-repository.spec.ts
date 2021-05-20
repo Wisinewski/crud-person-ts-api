@@ -48,6 +48,13 @@ describe('PersonMongoRepository', () => {
       expect(person.nomeMae).toBe(personParams.nomeMae)
       expect(person.nomePai).toBe(personParams.nomePai)
     });
+
+    test('should return null if loadByCpf fails', async () => {
+      const { sut } = makeSut()
+      const personParams = mockAddPersonParams()
+      const person = await sut.loadByCpf(personParams.cpf)
+      expect(person).toBeFalsy()
+    });
   });
 
   describe('add', () => {
