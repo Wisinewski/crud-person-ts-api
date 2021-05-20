@@ -1,18 +1,21 @@
 import { throwError } from './../../../domain/test/test-helper';
-import { mockAddPersonParams } from './../../../domain/test/mock-person';
-import { AddPersonRepositorySpy } from './../../test/mock-db-person';
+import { mockAddPersonParams, mockPersonModel } from './../../../domain/test/mock-person';
+import { AddPersonRepositorySpy, LoadPersonByCpfRepositorySpy } from './../../test/mock-db-person';
 import DbAddPerson from "./db-add-person"
 
 type SutTypes = {
   sut: DbAddPerson
+  loadPersonByCpfRepositorySpy: LoadPersonByCpfRepositorySpy
   addPersonRepositorySpy: AddPersonRepositorySpy
 }
 
 const makeSut = (): SutTypes => {
   const addPersonRepositorySpy = new AddPersonRepositorySpy()
-  const sut = new DbAddPerson(addPersonRepositorySpy)
+  const loadPersonByCpfRepositorySpy = new LoadPersonByCpfRepositorySpy()
+  const sut = new DbAddPerson(loadPersonByCpfRepositorySpy, addPersonRepositorySpy)
   return {
     sut,
+    loadPersonByCpfRepositorySpy,
     addPersonRepositorySpy
   }
 }
@@ -31,5 +34,13 @@ describe('DbAddPerson', () => {
     const personData = mockAddPersonParams()
     const promise = sut.add(personData)
     expect(promise).rejects.toThrow()
+  });
+
+  test('should return null if LoadPersonByCpfRepository not returns null', async () => {
+    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
+    loadPersonByCpfRepositorySpy.result = mockPersonModel()
+    const personData = mockAddPersonParams()
+    const person = await sut.add(personData)
+    expect(person).toBeNull()
   });
 });
