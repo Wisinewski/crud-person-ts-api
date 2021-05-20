@@ -1,11 +1,11 @@
 import { CpfInUseError } from './../../errors/cpf-in-use-error';
 import { ServerError } from './../../errors/server-error';
-import { serverError, forbidden } from './../../helpers/http-helper';
+import { serverError, forbidden, ok } from './../../helpers/http-helper';
 import { throwError } from './../../../domain/test/test-helper';
 import { AddPersonSpy } from './../../test/mock-person';
 import { AddPersonController } from './add-person-controller';
 import { HttpRequest } from './../../protocols/http';
-import { mockAddPersonParams } from './../../../domain/test/mock-person';
+import { mockAddPersonParams, mockPersonModel } from './../../../domain/test/mock-person';
 
 const mockRequest = (): HttpRequest => ({
   body: mockAddPersonParams()
@@ -47,5 +47,12 @@ describe('AddPersonController', () => {
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(forbidden(new CpfInUseError()))
+  });
+
+  test('should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = mockRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(ok(mockPersonModel()))
   });
 });
