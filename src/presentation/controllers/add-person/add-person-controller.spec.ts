@@ -1,6 +1,8 @@
+import { ValidationSpy } from './../../test/mock-validation';
+import { MissingParamError } from './../../errors/missing-param-error';
 import { CpfInUseError } from './../../errors/cpf-in-use-error';
 import { ServerError } from './../../errors/server-error';
-import { serverError, forbidden, ok } from './../../helpers/http-helper';
+import { serverError, forbidden, ok, badRequest } from './../../helpers/http-helper';
 import { throwError } from './../../../domain/test/test-helper';
 import { AddPersonSpy } from './../../test/mock-person';
 import { AddPersonController } from './add-person-controller';
@@ -13,19 +15,29 @@ const mockRequest = (): HttpRequest => ({
 
 type SutTypes = {
   sut: AddPersonController
+  validationSpy: ValidationSpy
   addPersonSpy: AddPersonSpy
 }
 
 const makeSut = (): SutTypes => {
+  const validationSpy = new ValidationSpy()
   const addPersonSpy = new AddPersonSpy()
-  const sut = new AddPersonController(addPersonSpy)
+  const sut = new AddPersonController(validationSpy, addPersonSpy)
   return {
     sut,
+    validationSpy,
     addPersonSpy
   }
 }
 
 describe('AddPersonController', () => {
+  test('should call Validation with correct values', async () => {
+    const { sut, validationSpy } = makeSut()
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(validationSpy.data).toEqual(httpRequest.body)
+  });
+
   test('should return 500 if AddPerson throws', async () => {
     const { sut, addPersonSpy } = makeSut()
     jest.spyOn(addPersonSpy, 'add').mockImplementationOnce(throwError)
