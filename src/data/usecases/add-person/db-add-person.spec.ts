@@ -21,6 +21,14 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddPerson', () => {
+  test('should return null if LoadPersonByCpfRepository not returns null', async () => {
+    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
+    loadPersonByCpfRepositorySpy.result = mockPersonModel()
+    const personData = mockAddPersonParams()
+    const person = await sut.add(personData)
+    expect(person).toBeNull()
+  });
+  
   test('should call AddPersonRepository with correct value', async () => {
     const { sut, addPersonRepositorySpy } = makeSut()
     const personData = mockAddPersonParams()
@@ -34,13 +42,5 @@ describe('DbAddPerson', () => {
     const personData = mockAddPersonParams()
     const promise = sut.add(personData)
     expect(promise).rejects.toThrow()
-  });
-
-  test('should return null if LoadPersonByCpfRepository not returns null', async () => {
-    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
-    loadPersonByCpfRepositorySpy.result = mockPersonModel()
-    const personData = mockAddPersonParams()
-    const person = await sut.add(personData)
-    expect(person).toBeNull()
   });
 });
