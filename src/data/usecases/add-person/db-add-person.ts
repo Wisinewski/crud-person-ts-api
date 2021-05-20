@@ -1,9 +1,9 @@
 import { PersonModel } from './../../../domain/models/person';
-import { LoadPersonByCpfRepository } from './../../protocols/db/person/load-person-by-cpf-repository';
-import { AddPersonRepository } from './../../protocols/db/person/add-person-repository';
+import { LoadPersonByCpfRepository } from './../../protocols/db/load-person-by-cpf-repository';
+import { AddPersonRepository } from './../../protocols/db/add-person-repository';
 import { AddPerson, AddPersonParams } from './../../../domain/usecases/add-person';
 
-export default class DbAddPerson implements AddPerson {
+export class DbAddPerson implements AddPerson {
   constructor (
     private readonly loadPersonByCpfRepository: LoadPersonByCpfRepository,
     private readonly addPersonRepository: AddPersonRepository

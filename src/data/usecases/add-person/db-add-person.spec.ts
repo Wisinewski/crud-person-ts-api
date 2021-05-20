@@ -1,7 +1,7 @@
 import { throwError } from './../../../domain/test/test-helper';
 import { mockAddPersonParams, mockPersonModel } from './../../../domain/test/mock-person';
 import { AddPersonRepositorySpy, LoadPersonByCpfRepositorySpy } from './../../test/mock-db-person';
-import DbAddPerson from "./db-add-person"
+import { DbAddPerson } from "./db-add-person"
 
 type SutTypes = {
   sut: DbAddPerson

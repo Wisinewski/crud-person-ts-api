@@ -1,7 +1,7 @@
 import { PersonModel } from './../../domain/models/person';
-import { LoadPersonByCpfRepository } from './../protocols/db/person/load-person-by-cpf-repository';
+import { LoadPersonByCpfRepository } from './../protocols/db/load-person-by-cpf-repository';
 import { AddPersonParams } from './../../domain/usecases/add-person';
-import { AddPersonRepository } from './../protocols/db/person/add-person-repository';
+import { AddPersonRepository } from './../protocols/db/add-person-repository';
 import { mockPersonModel } from '../../domain/test/mock-person';
 
 export class AddPersonRepositorySpy implements AddPersonRepository {
