@@ -1,6 +1,7 @@
+import { MissingParamError } from './../../errors/missing-param-error';
 import { Validation } from './../../protocols/validation';
 import { CpfInUseError } from './../../errors/cpf-in-use-error';
-import { serverError, forbidden, ok } from './../../helpers/http-helper';
+import { serverError, forbidden, ok, badRequest } from './../../helpers/http-helper';
 import { AddPerson } from './../../../domain/usecases/add-person';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Controller } from './../../protocols/controller';
@@ -13,7 +14,10 @@ export class AddPersonController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
+      }
       const { nome, cpf, dataNascimento, paisNascimento, estadoNascimento, cidadeNascimento, email, nomePai, nomeMae } = httpRequest.body
       const person = await this.addPerson.add({
         nome,
