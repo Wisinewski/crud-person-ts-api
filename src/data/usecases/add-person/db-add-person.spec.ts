@@ -58,4 +58,11 @@ describe('DbAddPerson', () => {
     const promise = sut.add(personData)
     expect(promise).rejects.toThrow()
   });
+
+  test('should return an person on success', async () => {
+    const { sut } = makeSut()
+    const personData = mockAddPersonParams()
+    const person = await sut.add(personData)
+    expect(person).toEqual(mockPersonModel())
+  });
 });
