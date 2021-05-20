@@ -40,4 +40,12 @@ describe('AddPersonController', () => {
     await sut.handle(httpRequest)
     expect(addPersonSpy.person).toEqual(mockRequest().body)
   });
+
+  test('should return 403 if AddPerson returns null', async () => {
+    const { sut, addPersonSpy } = makeSut()
+    addPersonSpy.result = null
+    const httpRequest = mockRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(forbidden(new CpfInUseError()))
+  });
 });
