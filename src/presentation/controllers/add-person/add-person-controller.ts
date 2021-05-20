@@ -1,5 +1,5 @@
 import { CpfInUseError } from './../../errors/cpf-in-use-error';
-import { serverError, forbidden } from './../../helpers/http-helper';
+import { serverError, forbidden, ok } from './../../helpers/http-helper';
 import { AddPerson } from './../../../domain/usecases/add-person';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Controller } from './../../protocols/controller';
@@ -26,6 +26,7 @@ export class AddPersonController implements Controller {
       if (!person) {
         return forbidden(new CpfInUseError())
       }
+      return ok(person)
     } catch (error) {
       return serverError(error)
     }
