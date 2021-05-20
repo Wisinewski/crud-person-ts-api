@@ -5,6 +5,6 @@ export class ValidationSpy implements Validation {
   result: any = null
   validate (data: any): Error {
     this.data = data
-    return null
+    return this.result
   }
 }

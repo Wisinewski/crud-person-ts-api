@@ -38,6 +38,15 @@ describe('AddPersonController', () => {
     expect(validationSpy.data).toEqual(httpRequest.body)
   });
 
+  test('should return 400 if Validation returns an error', async () => {
+    const { sut, validationSpy } = makeSut()
+    const error = new MissingParamError('any_field')
+    validationSpy.result = error
+    const httpRequest = mockRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(badRequest(error))
+  });
+
   test('should return 500 if AddPerson throws', async () => {
     const { sut, addPersonSpy } = makeSut()
     jest.spyOn(addPersonSpy, 'add').mockImplementationOnce(throwError)
