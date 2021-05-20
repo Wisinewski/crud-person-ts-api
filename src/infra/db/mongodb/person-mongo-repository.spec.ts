@@ -49,4 +49,23 @@ describe('PersonMongoRepository', () => {
       expect(person.nomePai).toBe(personParams.nomePai)
     });
   });
+
+  describe('add', () => {
+    test('should return a person on add success', async () => {
+      const { sut } = makeSut()
+      const personParams = mockAddPersonParams()
+      const person = await sut.add(personParams)
+      expect(person).toBeTruthy()
+      expect(person.id).toBeTruthy()
+      expect(person.nome).toBe(personParams.nome)
+      expect(person.email).toBe(personParams.email)
+      expect(person.cpf).toBe(personParams.cpf)
+      expect(person.dataNascimento).toBe(personParams.dataNascimento)
+      expect(person.paisNascimento).toBe(personParams.paisNascimento)
+      expect(person.estadoNascimento).toBe(personParams.estadoNascimento)
+      expect(person.cidadeNascimento).toBe(personParams.cidadeNascimento)
+      expect(person.nomeMae).toBe(personParams.nomeMae)
+      expect(person.nomePai).toBe(personParams.nomePai)
+    });
+  });
 });
