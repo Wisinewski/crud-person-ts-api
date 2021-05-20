@@ -3,3 +3,8 @@ export type HttpRequest = {
   headers?: any
   params?: any
 }
+
+export type HttpResponse = {
+  statusCode: number
+  body: any
+}
