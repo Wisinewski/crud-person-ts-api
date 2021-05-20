@@ -28,6 +28,14 @@ describe('DbAddPerson', () => {
     expect(loadPersonByCpfRepositorySpy.cpf).toEqual(personData.cpf)
   });
 
+  test('should throw if LoadPersonByCpfRepository throws', async () => {
+    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
+    jest.spyOn(loadPersonByCpfRepositorySpy, 'loadByCpf').mockImplementationOnce(throwError)
+    const personData = mockAddPersonParams()
+    const promise = sut.add(personData)
+    expect(promise).rejects.toThrow()
+  });
+
   test('should return null if LoadPersonByCpfRepository not returns null', async () => {
     const { sut, loadPersonByCpfRepositorySpy } = makeSut()
     loadPersonByCpfRepositorySpy.result = mockPersonModel()
