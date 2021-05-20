@@ -2,7 +2,7 @@
 
 > ## Caso de sucesso
 
-1. Recebe uma requisição do tipo **POST** na rota **/api/persons
+1. Recebe uma requisição do tipo **POST** na rota **/api/persons**
 2. Valida dados obrigatórios **nome**, **CPF**, **data nascimento**, **país nascimento**, **estado nascimento**, **cidade nascimento** e **email**
 3. Valida se o campo **CPF** é um CPF válido
 4. Valida se já existe uma pessoa com o **CPF** fornecido
