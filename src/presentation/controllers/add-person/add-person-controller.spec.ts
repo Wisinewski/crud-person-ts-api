@@ -1,5 +1,6 @@
+import { CpfInUseError } from './../../errors/cpf-in-use-error';
 import { ServerError } from './../../errors/server-error';
-import { serverError } from './../../helpers/http-helper';
+import { serverError, forbidden } from './../../helpers/http-helper';
 import { throwError } from './../../../domain/test/test-helper';
 import { AddPersonSpy } from './../../test/mock-person';
 import { AddPersonController } from './add-person-controller';
@@ -31,5 +32,12 @@ describe('AddPersonController', () => {
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  });
+
+  test('should call AddPerson with correct values', async () => {
+    const { sut, addPersonSpy } = makeSut()
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(addPersonSpy.person).toEqual(mockRequest().body)
   });
 });
