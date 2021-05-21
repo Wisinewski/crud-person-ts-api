@@ -5,7 +5,7 @@ import { PersonModel } from '../../../domain/models/person';
 import { LoadPersonByCpfRepository } from '../../../data/protocols/db/load-person-by-cpf-repository';
 
 export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPersonRepository {
-  async loadByCpf (cpf: String): Promise<PersonModel> {
+  async loadByCpf (cpf: string): Promise<PersonModel> {
     const personCollection = await MongoHelper.getCollection('persons')
     const person = await personCollection.findOne({ cpf })
     return person && MongoHelper.map(person)

@@ -14,9 +14,9 @@ export class AddPersonRepositorySpy implements AddPersonRepository {
 }
 
 export class LoadPersonByCpfRepositorySpy implements LoadPersonByCpfRepository {
-  cpf: String
+  cpf: string
   result: PersonModel = null
-  async loadByCpf (cpf: String): Promise<PersonModel> {
+  async loadByCpf (cpf: string): Promise<PersonModel> {
     this.cpf = cpf
     return this.result
   }
