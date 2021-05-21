@@ -23,4 +23,11 @@ describe('CpfValidation', () => {
     const error = sut.validate({ cpf: 'any_cpf' })
     expect(error).toEqual(new InvalidParamError('cpf'))
   });
+
+  test('should call CpfValidator with correct value', async () => {
+    const { sut, cpfValidatorSpy } = makeSut()
+    const cpf = 'any_cpf'
+    sut.validate({ cpf })
+    expect(cpfValidatorSpy.cpf).toBe(cpf)
+  });
 });
