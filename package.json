@@ -8,7 +8,8 @@
     "build": "rimraf dist && tsc",
     "test": "jest",
     "test:staged": "jest",
-    "test:unit": "npm test -- --watch --runInBand"
+    "test:unit": "npm test -- --watch --runInBand",
+    "test:integration": "npm test -- --watch -c"
   },
   "keywords": [],
   "author": "",
