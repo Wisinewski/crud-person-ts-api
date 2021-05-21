@@ -18,7 +18,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('Name of the group', () => {
+describe('EmailValidatorAdapter', () => {
   test('should call validator with correct value', () => {
     const { sut } = makeSut()
     const isEmailSpy = jest.spyOn(validator, 'isEmail')
@@ -31,5 +31,11 @@ describe('Name of the group', () => {
     jest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)
     const isValid = sut.isValid('any_email@email.com')
     expect(isValid).toBe(false)
+  });
+
+  test('should returns true if validator returns true', () => {
+    const { sut } = makeSut()
+    const isValid = sut.isValid('any_email@email.com')
+    expect(isValid).toBe(true)
   });
 });
