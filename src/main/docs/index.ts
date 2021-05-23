@@ -7,7 +7,7 @@ export default {
   info: {
     title: 'crud-person-ts-api',
     description: 'API para realizar CRUD de pessoas',
-    version: '1.3.0'
+    version: '1.4.0'
   },
   servers: [{
     url: '/api'
