@@ -1,4 +1,6 @@
-import { badRequest } from './../../helpers/http-helper';
+import { ServerError } from './../../errors/server-error';
+import { throwError } from './../../../domain/test/test-helper';
+import { badRequest, serverError } from './../../helpers/http-helper';
 import { MissingParamError } from './../../errors/missing-param-error';
 import { LoadPersonByCpfSpy } from './../../test/mock-person';
 import { LoadPersonByCpfController } from './load-person-by-cpf-controller';
@@ -33,7 +35,7 @@ describe('LoadPersonByCpfController', () => {
     const { sut, validationSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(validationSpy.data).toBe(httpRequest.params)
+    expect(validationSpy.data).toBe(httpRequest.params.cpf)
   });
 
   test('should return 400 if Validation returns an error', async () => {
@@ -43,5 +45,13 @@ describe('LoadPersonByCpfController', () => {
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(badRequest(error))
+  });
+
+  test('should return 500 if LoadPersonByCpf throws', async () => {
+    const { sut, loadPersonByCpfSpy } = makeSut()
+    jest.spyOn(loadPersonByCpfSpy, 'load').mockImplementationOnce(throwError)
+    const httpRequest = mockRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   });
 });
