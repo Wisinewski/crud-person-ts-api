@@ -1,4 +1,4 @@
-import { badRequest } from './../../helpers/http-helper';
+import { badRequest, serverError } from './../../helpers/http-helper';
 import { LoadPersonByCpf } from './../../../domain/usecases/load-person-by-cpf';
 import { Validation } from './../../protocols/validation';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
@@ -11,10 +11,16 @@ export class LoadPersonByCpfController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const error = this.validation.validate(httpRequest.params)
-    if (error) {
-      return badRequest(error)
+    try {
+      const { cpf } = httpRequest.params
+      const error = this.validation.validate(cpf)
+      if (error) {
+        return badRequest(error)
+      }
+      await this.loadPersonByCpf.load(cpf)
+      return null
+    } catch (error) {
+      return serverError(error)
     }
-    return null
   }
 }
