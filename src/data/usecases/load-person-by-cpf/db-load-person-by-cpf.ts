@@ -8,7 +8,7 @@ export class DbLoadPersonByCpf implements LoadPersonByCpf {
   ) {}
 
   async load (cpf: string): Promise<PersonModel> {
-    await this.loadPersonByCpfRepository.loadByCpf(cpf)
-    return null
+    const person = await this.loadPersonByCpfRepository.loadByCpf(cpf)
+    return person
   }
 }
