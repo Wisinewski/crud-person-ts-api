@@ -1,4 +1,5 @@
-import { badRequest, serverError } from './../../helpers/http-helper';
+import { InvalidParamError } from './../../errors/invalid-param-error';
+import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
 import { LoadPersonByCpf } from './../../../domain/usecases/load-person-by-cpf';
 import { Validation } from './../../protocols/validation';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
@@ -17,8 +18,8 @@ export class LoadPersonByCpfController implements Controller {
       if (error) {
         return badRequest(error)
       }
-      await this.loadPersonByCpf.load(cpf)
-      return null
+      const person = await this.loadPersonByCpf.load(cpf)
+      return person ? null : forbidden(new InvalidParamError('cpf'))
     } catch (error) {
       return serverError(error)
     }
