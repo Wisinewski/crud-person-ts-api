@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/src/main/server.js",
     "build": "rimraf dist && tsc",
+    "dev": "npm run build && npm start",
     "test": "jest",
     "test:staged": "jest",
     "test:unit": "npm test -- --watch --runInBand",
