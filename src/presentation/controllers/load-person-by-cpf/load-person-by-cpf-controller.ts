@@ -1,3 +1,4 @@
+import { badRequest } from './../../helpers/http-helper';
 import { LoadPersonByCpf } from './../../../domain/usecases/load-person-by-cpf';
 import { Validation } from './../../protocols/validation';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
@@ -10,7 +11,10 @@ export class LoadPersonByCpfController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    this.validation.validate(httpRequest.params)
+    const error = this.validation.validate(httpRequest.params)
+    if (error) {
+      return badRequest(error)
+    }
     return null
   }
 }
