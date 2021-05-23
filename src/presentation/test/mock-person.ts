@@ -14,8 +14,9 @@ export class AddPersonSpy implements AddPerson {
 
 export class LoadPersonByCpfSpy implements LoadPersonByCpf {
   cpf: string
+  result: PersonModel = mockPersonModel()
   async load (cpf: string): Promise<PersonModel> {
     this.cpf = cpf
-    return null
+    return this.result
   }
 }
