@@ -1,3 +1,4 @@
+import { throwError } from './../../../domain/test/test-helper';
 import { DbLoadPersonByCpf } from './db-load-person-by-cpf';
 import { LoadPersonByCpfRepositorySpy } from './../../test/mock-db-person';
 
@@ -21,5 +22,12 @@ describe('DbLoadPersonByCpf', () => {
     const cpf = 'any_cpf'
     await sut.load(cpf)
     expect(loadPersonByCpfRepositorySpy.cpf).toBe(cpf)
+  });
+
+  test('should throw if LoadPersonByCpfRepository throws', async () => {
+    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
+    jest.spyOn(loadPersonByCpfRepositorySpy, 'loadByCpf').mockImplementationOnce(throwError)
+    const promise = sut.load('any_cpf')
+    expect(promise).rejects.toThrow()
   });
 });
