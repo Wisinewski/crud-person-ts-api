@@ -1,7 +1,8 @@
+import { mockPersonModel } from './../../../domain/test/mock-person';
 import { InvalidParamError } from './../../errors/invalid-param-error';
 import { ServerError } from './../../errors/server-error';
 import { throwError } from './../../../domain/test/test-helper';
-import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
+import { badRequest, serverError, forbidden, ok } from './../../helpers/http-helper';
 import { MissingParamError } from './../../errors/missing-param-error';
 import { LoadPersonByCpfSpy } from './../../test/mock-person';
 import { LoadPersonByCpfController } from './load-person-by-cpf-controller';
@@ -69,5 +70,12 @@ describe('LoadPersonByCpfController', () => {
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('cpf')))
+  });
+
+  test('should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = mockRequest()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(ok(mockPersonModel()))
   });
 });
