@@ -30,4 +30,11 @@ describe('DbLoadPersonByCpf', () => {
     const promise = sut.load('any_cpf')
     expect(promise).rejects.toThrow()
   });
+
+  test('should return null if LoadPersonByCpfRepository returns null', async () => {
+    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
+    loadPersonByCpfRepositorySpy.result = null
+    const person = await sut.load('any_cpf')
+    expect(person).toBeNull()
+  });
 });
