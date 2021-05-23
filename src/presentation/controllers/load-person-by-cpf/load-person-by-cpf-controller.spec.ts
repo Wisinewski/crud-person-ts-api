@@ -37,7 +37,7 @@ describe('LoadPersonByCpfController', () => {
     const { sut, validationSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(validationSpy.data).toBe(httpRequest.params.cpf)
+    expect(validationSpy.data).toBe(httpRequest.params)
   });
 
   test('should return 400 if Validation returns an error', async () => {
