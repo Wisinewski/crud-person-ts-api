@@ -54,4 +54,11 @@ describe('LoadPersonByCpfController', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   });
+
+  test('should call LoadPersonByCpf with correct value', async () => {
+    const { sut, loadPersonByCpfSpy } = makeSut()
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(loadPersonByCpfSpy.cpf).toEqual(mockRequest().params.cpf)
+  });
 });
