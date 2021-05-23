@@ -1,3 +1,4 @@
+import { mockPersonModel } from './../../../domain/test/mock-person';
 import { throwError } from './../../../domain/test/test-helper';
 import { DbLoadPersonByCpf } from './db-load-person-by-cpf';
 import { LoadPersonByCpfRepositorySpy } from './../../test/mock-db-person';
@@ -36,5 +37,13 @@ describe('DbLoadPersonByCpf', () => {
     loadPersonByCpfRepositorySpy.result = null
     const person = await sut.load('any_cpf')
     expect(person).toBeNull()
+  });
+
+  test('should return a person if LoadPersonByCpfRepository returns a person', async () => {
+    const { sut, loadPersonByCpfRepositorySpy } = makeSut()
+    const personModel = mockPersonModel()
+    loadPersonByCpfRepositorySpy.result = personModel
+    const person = await sut.load('any_cpf')
+    expect(person).toEqual(personModel)
   });
 });
