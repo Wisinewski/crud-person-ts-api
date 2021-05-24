@@ -1,8 +1,9 @@
+import { InvalidParamError } from './../../errors/invalid-param-error';
 import { ServerError } from './../../errors/server-error';
 import { throwError } from './../../../domain/test/test-helper';
 import { DeletePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
-import { badRequest, serverError } from './../../helpers/http-helper';
+import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
 import { DeletePersonByIdController } from './delete-person-by-id-controller';
 import { ValidationSpy } from '../../test/mock-validation';
 import { HttpRequest } from './../../protocols/http';
@@ -58,5 +59,12 @@ describe('DeletePersonByIdController', () => {
     jest.spyOn(deletePersonByIdSpy, 'delete').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
+  });
+
+  test('should return 403 if DeletePersonById returns false', async () => {
+    const { sut, deletePersonByIdSpy } = makeSut()
+    deletePersonByIdSpy.result = false
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
   });
 });
