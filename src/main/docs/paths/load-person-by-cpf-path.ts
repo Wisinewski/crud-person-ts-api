@@ -16,6 +16,8 @@ export const loadPersonByCpfPath = {
         content: {
           'application/json': {
             schema: {
+              name: 'id',
+              required: true,
               $ref: '#/schemas/person'
             }
           }

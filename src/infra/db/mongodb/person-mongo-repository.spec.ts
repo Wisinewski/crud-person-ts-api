@@ -1,5 +1,5 @@
 import { mockAddPersonParams } from './../../../domain/test/mock-person';
-import { Collection } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 import { MongoHelper } from './helpers/mongo-helper';
 import { PersonMongoRepository } from './person-mongo-repository';
 
@@ -73,6 +73,17 @@ describe('PersonMongoRepository', () => {
       expect(person.cidadeNascimento).toBe(personParams.cidadeNascimento)
       expect(person.nomeMae).toBe(personParams.nomeMae)
       expect(person.nomePai).toBe(personParams.nomePai)
+    });
+  });
+
+  describe('deleteById', () => {
+    test('should not return a person on deleteById success', async () => {
+      const { sut } = makeSut()
+      const result = await personCollection.insertOne(mockAddPersonParams())
+      const person = MongoHelper.map(result.ops[0])
+      await sut.deleteById(person.id)
+      const deletedPerson = await personCollection.findOne({ _id: new ObjectId(person.id) })
+      expect(deletedPerson).toBe(null)
     });
   });
 });
