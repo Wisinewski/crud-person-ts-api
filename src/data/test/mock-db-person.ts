@@ -1,3 +1,4 @@
+import { DeletePersonByIdRepository } from './../protocols/db/delete-person-by-id-repository';
 import { PersonModel } from './../../domain/models/person';
 import { LoadPersonByCpfRepository } from './../protocols/db/load-person-by-cpf-repository';
 import { AddPersonParams } from './../../domain/usecases/add-person';
@@ -18,6 +19,15 @@ export class LoadPersonByCpfRepositorySpy implements LoadPersonByCpfRepository {
   result: PersonModel = null
   async loadByCpf (cpf: string): Promise<PersonModel> {
     this.cpf = cpf
+    return this.result
+  }
+}
+
+export class DeletePersonByIdRepositorySpy implements DeletePersonByIdRepository {
+  id: string
+  result: boolean = true
+  async deleteById (id: string): Promise<boolean> {
+    this.id = id
     return this.result
   }
 }
