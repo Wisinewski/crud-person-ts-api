@@ -1,12 +1,14 @@
 {
   "name": "crud-person-ts-api",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node dist/src/main/server.js",
     "build": "rimraf dist && tsc",
     "dev": "npm run build && npm start",
+    "db:up": "cd src/infra/db/mongodb/mongo-migrations && migrate-mongo up",
+    "db:down": "cd src/infra/db/mongodb/mongo-migrations && migrate-mongo down",
     "test": "jest",
     "test:staged": "jest",
     "test:unit": "npm test -- --watch --runInBand",
