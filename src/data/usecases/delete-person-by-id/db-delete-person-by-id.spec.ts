@@ -37,4 +37,10 @@ describe('DbDeletePersonById', () => {
     const result = await sut.delete('any_id')
     expect(result).toBeFalsy()
   });
+
+  test('should return true if DeletePersonByIdRepository returns true', async () => {
+    const { sut } = makeSut()
+    const result = await sut.delete('any_id')
+    expect(result).toBeTruthy()
+  });
 });
