@@ -1,5 +1,5 @@
 import { DeletePersonById } from './../../../domain/usecases/delete-person-by-id';
-import { badRequest } from './../../helpers/http-helper';
+import { badRequest, serverError } from './../../helpers/http-helper';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Validation } from './../../protocols/validation';
 import { Controller } from './../../protocols/controller';
@@ -11,12 +11,16 @@ export class DeletePersonByIdController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const error = await this.validation.validate(httpRequest.body)
-    if (error) {
-      return badRequest(error)
+    try {
+      const error = await this.validation.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
+      }
+      const { id } = httpRequest.body
+      await this.deletePersonById.delete(id)
+      return null
+    } catch (error) {
+      return serverError(error)
     }
-    const { id } = httpRequest.body
-    await this.deletePersonById.delete(id)
-    return null
   }
 }
