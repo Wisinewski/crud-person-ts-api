@@ -1,6 +1,8 @@
+import { ServerError } from './../../errors/server-error';
+import { throwError } from './../../../domain/test/test-helper';
 import { DeletePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
-import { badRequest } from './../../helpers/http-helper';
+import { badRequest, serverError } from './../../helpers/http-helper';
 import { DeletePersonByIdController } from './delete-person-by-id-controller';
 import { ValidationSpy } from '../../test/mock-validation';
 import { HttpRequest } from './../../protocols/http';
@@ -49,5 +51,12 @@ describe('DeletePersonByIdController', () => {
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(deletePersonByIdSpy.id).toBe(httpRequest.body.id)
+  });
+
+  test('should return 500 if DeletePersonById throws', async () => {
+    const { sut, deletePersonByIdSpy } = makeSut()
+    jest.spyOn(deletePersonByIdSpy, 'delete').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   });
 });
