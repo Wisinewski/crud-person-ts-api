@@ -1,5 +1,6 @@
+import { InvalidParamError } from './../../errors/invalid-param-error';
 import { DeletePersonById } from './../../../domain/usecases/delete-person-by-id';
-import { badRequest, serverError } from './../../helpers/http-helper';
+import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Validation } from './../../protocols/validation';
 import { Controller } from './../../protocols/controller';
@@ -17,8 +18,8 @@ export class DeletePersonByIdController implements Controller {
         return badRequest(error)
       }
       const { id } = httpRequest.body
-      await this.deletePersonById.delete(id)
-      return null
+      const result = await this.deletePersonById.delete(id)
+      return result ? null : forbidden(new InvalidParamError('id'))
     } catch (error) {
       return serverError(error)
     }
