@@ -1,3 +1,4 @@
+import { DeletePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
 import { badRequest } from './../../helpers/http-helper';
 import { DeletePersonByIdController } from './delete-person-by-id-controller';
@@ -13,14 +14,17 @@ const mockRequest = (): HttpRequest => ({
 type SutTypes = {
   sut: DeletePersonByIdController
   validationSpy: ValidationSpy
+  deletePersonByIdSpy: DeletePersonByIdSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new DeletePersonByIdController(validationSpy)
+  const deletePersonByIdSpy = new DeletePersonByIdSpy()
+  const sut = new DeletePersonByIdController(validationSpy, deletePersonByIdSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    deletePersonByIdSpy
   }
 }
 
@@ -38,5 +42,12 @@ describe('DeletePersonByIdController', () => {
     validationSpy.result = error
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
+  });
+
+  test('should call DeletePersonById with correct value', async () => {
+    const { sut, deletePersonByIdSpy } = makeSut()
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(deletePersonByIdSpy.id).toBe(httpRequest.body.id)
   });
 });
