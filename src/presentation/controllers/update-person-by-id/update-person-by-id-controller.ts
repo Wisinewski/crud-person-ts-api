@@ -1,5 +1,6 @@
+import { InvalidParamError } from './../../errors/invalid-param-error';
 import { UpdatePersonById } from './../../../domain/usecases/update-person-by-id';
-import { badRequest, serverError } from './../../helpers/http-helper';
+import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Validation } from './../../protocols/validation';
 import { Controller } from './../../protocols/controller';
@@ -17,7 +18,7 @@ export class UpdatePersonByIdController implements Controller {
         return badRequest(error)
       }
       const { id, nome, dataNascimento, paisNascimento, estadoNascimento, cidadeNascimento, email, nomePai, nomeMae } = httpRequest.body
-      await this.updatePersonById.update({
+      const person = await this.updatePersonById.update({
         id, 
         nome, 
         dataNascimento, 
@@ -28,6 +29,9 @@ export class UpdatePersonByIdController implements Controller {
         nomePai, 
         nomeMae
       })
+      if (!person) {
+        return forbidden(new InvalidParamError('id'))
+      }
       return null
     } catch (error) {
       return serverError(error)
