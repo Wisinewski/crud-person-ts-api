@@ -1,6 +1,6 @@
 import { throwError } from './../../../domain/test/test-helper';
 import { UpdatePersonByIdRepositorySpy } from './../../test/mock-db-person';
-import { mockUpdatePersonParams } from './../../../domain/test/mock-person';
+import { mockUpdatePersonParams, mockPersonModel } from './../../../domain/test/mock-person';
 import { DbUpdatePersonById } from './db-update-person-by-id';
 
 type SutTypes = {
@@ -37,5 +37,11 @@ describe('DbUpdatePersonById', () => {
     updatePersonByIdRepositorySpy.result = null
     const person = await sut.update(mockUpdatePersonParams())
     expect(person).toBeFalsy()
+  });
+
+  test('should returns a person on success', async () => {
+    const { sut } = makeSut()
+    const person = await sut.update(mockUpdatePersonParams())
+    expect(person).toEqual(mockPersonModel())
   });
 });
