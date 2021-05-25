@@ -1,3 +1,4 @@
+import { throwError } from './../../../domain/test/test-helper';
 import { LoadPersonByFilterRepositorySpy } from './../../test/mock-db-person';
 import { DbLoadPersonByFilter } from './db-load-person-by-filter';
 import { mockFilterPersonParams } from './../../../domain/test/mock-person';
@@ -22,5 +23,12 @@ describe('DbLoadPersonByFilter', () => {
     const filterParams = mockFilterPersonParams()
     await sut.load(filterParams)
     expect(loadPersonByFilterRepositorySpy.params).toEqual(filterParams)
+  });
+
+  test('should throw if LoadPersonByFilterRepository throws', async () => {
+    const { sut, loadPersonByFilterRepositorySpy } = makeSut()
+    jest.spyOn(loadPersonByFilterRepositorySpy, 'loadByFilter').mockImplementationOnce(throwError)
+    const promise = sut.load(mockFilterPersonParams())
+    await expect(promise).rejects.toThrow()
   });
 });
