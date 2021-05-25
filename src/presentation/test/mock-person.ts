@@ -1,3 +1,4 @@
+import { UpdatePersonById, UpdatePersonParams } from './../../domain/usecases/update-person-by-id';
 import { DeletePersonById } from './../../domain/usecases/delete-person-by-id';
 import { LoadPersonByCpf } from './../../domain/usecases/load-person-by-cpf';
 import { mockPersonModel } from './../../domain/test/mock-person';
@@ -27,6 +28,15 @@ export class DeletePersonByIdSpy implements DeletePersonById {
   result: boolean = true
   async delete (id: string): Promise<boolean> {
     this.id = id
+    return this.result
+  }
+}
+
+export class UpdatePersonByIdSpy implements UpdatePersonById {
+  person: UpdatePersonParams
+  result: PersonModel = mockPersonModel()
+  async update (person: UpdatePersonParams): Promise<PersonModel> {
+    this.person = person
     return this.result
   }
 }
