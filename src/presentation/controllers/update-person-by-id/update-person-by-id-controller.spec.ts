@@ -1,6 +1,7 @@
+import { throwError } from './../../../domain/test/test-helper';
 import { UpdatePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
-import { badRequest } from './../../helpers/http-helper';
+import { badRequest, serverError } from './../../helpers/http-helper';
 import { UpdatePersonByIdController } from './update-person-by-id-controller';
 import { ValidationSpy } from './../../test/mock-validation';
 import { mockUpdatePersonParams } from './../../../domain/test/mock-person';
@@ -48,5 +49,12 @@ describe('UpdatePersonByIdController', () => {
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
     expect(updatePersonByIdSpy.person).toEqual(httpRequest.body)
+  });
+
+  test('should return 500 if UpdatePersonById throws', async () => {
+    const { sut, updatePersonByIdSpy } = makeSut()
+    jest.spyOn(updatePersonByIdSpy, 'update').mockImplementationOnce(throwError)
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
   });
 });
