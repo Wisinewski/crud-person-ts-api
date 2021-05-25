@@ -66,5 +66,43 @@ export const personPath = {
         $ref: '#/components/serverError'
       }
     }
+  },
+
+  put: {
+    tags: ['Pessoa'],
+    summary: 'API para atualizar uma pessoa',
+    requestBody: {
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/schemas/updatePersonByIdParams'
+          }
+        }
+      }
+    },
+    responses: {
+      200: {
+        description: 'Sucesso',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/schemas/person'
+            }
+          }
+        }
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      403: {
+        $ref: '#/components/forbidden'
+      },
+      404: {
+        $ref: '#/components/notFound'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
   }
 }
