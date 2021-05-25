@@ -1,3 +1,4 @@
+import { UpdatePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
 import { badRequest } from './../../helpers/http-helper';
 import { UpdatePersonByIdController } from './update-person-by-id-controller';
@@ -12,14 +13,17 @@ const mockRequest = (): HttpRequest => ({
 type SutTypes = {
   sut: UpdatePersonByIdController
   validationSpy: ValidationSpy
+  updatePersonByIdSpy: UpdatePersonByIdSpy
 }
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy()
-  const sut = new UpdatePersonByIdController(validationSpy)
+  const updatePersonByIdSpy = new UpdatePersonByIdSpy()
+  const sut = new UpdatePersonByIdController(validationSpy, updatePersonByIdSpy)
   return {
     sut,
-    validationSpy
+    validationSpy,
+    updatePersonByIdSpy
   }
 }
 
@@ -37,5 +41,12 @@ describe('UpdatePersonByIdController', () => {
     validationSpy.result = error
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(badRequest(error))
+  });
+
+  test('should call UpdatePersonById with correct values', async () => {
+    const { sut, updatePersonByIdSpy } = makeSut()
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(updatePersonByIdSpy.person).toEqual(httpRequest.body)
   });
 });
