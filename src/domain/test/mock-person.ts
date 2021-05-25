@@ -1,3 +1,4 @@
+import { FilterPersonParams } from './../usecases/load-person-by-filter';
 import { UpdatePersonParams } from './../usecases/update-person-by-id';
 import { PersonModel } from './../models/person';
 import { AddPersonParams } from './../usecases/add-person';
@@ -37,4 +38,13 @@ export const mockUpdatePersonParams = (): UpdatePersonParams => ({
   email: 'any_emailNascimento',
   nomePai: 'any_nomePai',
   nomeMae: 'any_nomeMae'
+})
+
+export const mockFilterPersonParams = (): FilterPersonParams => ({
+  nome: 'any_nome',
+  cpf: 'any_cpf',
+  dataNascimento: 'any_dataNascimento',
+  paisNascimento: 'any_paisNascimento',
+  estadoNascimento: 'any_estadoNascimento',
+  cidadeNascimento: 'any_cidadeNascimento'
 })
