@@ -86,4 +86,18 @@ describe('PersonMongoRepository', () => {
       expect(deletedPerson).toBe(null)
     });
   });
+
+  describe('updateById', () => {
+    test('should update a person on updateById success', async () => {
+      const { sut } = makeSut()
+      const personData = mockAddPersonParams()
+      const result = await personCollection.insertOne(personData)
+      const person = MongoHelper.map(result.ops[0])
+      const email = 'other_email@email.com'
+      person.email = email
+      const updatedPerson = await sut.updateById(person)
+      expect(updatedPerson).toBeTruthy()
+      expect(updatedPerson.email).toBe(email)
+    });
+  });
 });
