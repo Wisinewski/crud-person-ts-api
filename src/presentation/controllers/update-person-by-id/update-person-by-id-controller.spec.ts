@@ -1,7 +1,8 @@
+import { InvalidParamError } from './../../errors/invalid-param-error';
 import { throwError } from './../../../domain/test/test-helper';
 import { UpdatePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
-import { badRequest, serverError } from './../../helpers/http-helper';
+import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
 import { UpdatePersonByIdController } from './update-person-by-id-controller';
 import { ValidationSpy } from './../../test/mock-validation';
 import { mockUpdatePersonParams } from './../../../domain/test/mock-person';
@@ -56,5 +57,12 @@ describe('UpdatePersonByIdController', () => {
     jest.spyOn(updatePersonByIdSpy, 'update').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  });
+
+  test('should return 403 if UpdatePersonById returns null', async () => {
+    const { sut, updatePersonByIdSpy } = makeSut()
+    updatePersonByIdSpy.result = null
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
   });
 });
