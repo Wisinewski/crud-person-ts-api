@@ -31,4 +31,11 @@ describe('DbUpdatePersonById', () => {
     const promise = sut.update(mockUpdatePersonParams())
     await expect(promise).rejects.toThrow()
   });
+
+  test('should return null if UpdatePersonByIdRepository returns null', async () => {
+    const { sut, updatePersonByIdRepositorySpy } = makeSut()
+    updatePersonByIdRepositorySpy.result = null
+    const person = await sut.update(mockUpdatePersonParams())
+    expect(person).toBeFalsy()
+  });
 });
