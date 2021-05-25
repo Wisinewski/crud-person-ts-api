@@ -8,7 +8,7 @@
 4. Valida se já existe uma pessoa com o **CPF** fornecido
 5. Valida se o campo **email** é um e-mail válido
 6. **Cadastra** uma pessoa com os dados fornecidos
-7. Retorna **200**
+7. Retorna **200** com os dados da pessoa
 
 > ## Exceções
 

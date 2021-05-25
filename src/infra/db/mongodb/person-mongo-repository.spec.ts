@@ -1,4 +1,4 @@
-import { mockAddPersonParams } from './../../../domain/test/mock-person';
+import { mockAddPersonParams, mockUpdatePersonParams } from './../../../domain/test/mock-person';
 import { Collection, ObjectId } from 'mongodb';
 import { MongoHelper } from './helpers/mongo-helper';
 import { PersonMongoRepository } from './person-mongo-repository';
@@ -84,6 +84,28 @@ describe('PersonMongoRepository', () => {
       await sut.deleteById(person.id)
       const deletedPerson = await personCollection.findOne({ _id: new ObjectId(person.id) })
       expect(deletedPerson).toBe(null)
+    });
+  });
+
+  describe('updateById', () => {
+    test('should update a person on updateById success', async () => {
+      const { sut } = makeSut()
+      const personData = mockAddPersonParams()
+      const result = await personCollection.insertOne(personData)
+      const person = MongoHelper.map(result.ops[0])
+      const email = 'other_email@email.com'
+      person.email = email
+      const updatedPerson = await sut.updateById(person)
+      expect(updatedPerson).toBeTruthy()
+      expect(updatedPerson.email).toBe(email)
+    });
+
+    test('should return null if updateById fails', async () => {
+      const { sut } = makeSut()
+      const personData = mockUpdatePersonParams()
+      personData.id = '60abe8aa6be4e84740d7f1d4'
+      const updatedPerson = await sut.updateById(personData)
+      expect(updatedPerson).toBeFalsy()
     });
   });
 });

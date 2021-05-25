@@ -1,3 +1,5 @@
+import { UpdatePersonParams } from './../../../domain/usecases/update-person-by-id';
+import { UpdatePersonByIdRepository } from './../../../data/protocols/db/update-person-by-id-repository';
 import { AddPersonParams } from './../../../domain/usecases/add-person';
 import { AddPersonRepository } from './../../../data/protocols/db/add-person-repository';
 import { MongoHelper } from './helpers/mongo-helper';
@@ -6,7 +8,7 @@ import { LoadPersonByCpfRepository } from '../../../data/protocols/db/load-perso
 import { DeletePersonByIdRepository } from '../../../data/protocols/db/delete-person-by-id-repository';
 import { ObjectId } from 'bson';
 
-export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPersonRepository, DeletePersonByIdRepository {
+export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPersonRepository, DeletePersonByIdRepository, UpdatePersonByIdRepository {
   async loadByCpf (cpf: string): Promise<PersonModel> {
     const personCollection = await MongoHelper.getCollection('persons')
     const person = await personCollection.findOne({ cpf })
@@ -24,5 +26,26 @@ export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPers
     const personCollection = await MongoHelper.getCollection('persons')
     const response = await personCollection.deleteOne({ _id: new ObjectId(id) })
     return response.result.n === 1
+  }
+
+  async updateById (personData: UpdatePersonParams): Promise<PersonModel> {
+    const personCollection = await MongoHelper.getCollection('persons')
+    const person = await personCollection.findOneAndUpdate({
+      _id: new ObjectId(personData.id)
+    }, {
+      $set: {
+        nome: personData.nome,
+        dataNascimento: personData.dataNascimento,
+        paisNascimento: personData.paisNascimento,
+        estadoNascimento: personData.estadoNascimento,
+        cidadeNascimento: personData.cidadeNascimento,
+        email: personData.email,
+        nomePai: personData.nomePai,
+        nomeMae: personData.nomeMae
+      }
+    }, {
+      returnOriginal: false
+    })
+    return person.value ? MongoHelper.map(person.value) : null
   }
 }
