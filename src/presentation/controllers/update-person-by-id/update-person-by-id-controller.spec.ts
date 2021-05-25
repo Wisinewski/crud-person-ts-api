@@ -2,10 +2,10 @@ import { InvalidParamError } from './../../errors/invalid-param-error';
 import { throwError } from './../../../domain/test/test-helper';
 import { UpdatePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
-import { badRequest, serverError, forbidden } from './../../helpers/http-helper';
+import { badRequest, serverError, forbidden, ok } from './../../helpers/http-helper';
 import { UpdatePersonByIdController } from './update-person-by-id-controller';
 import { ValidationSpy } from './../../test/mock-validation';
-import { mockUpdatePersonParams } from './../../../domain/test/mock-person';
+import { mockUpdatePersonParams, mockPersonModel } from './../../../domain/test/mock-person';
 import { HttpRequest } from './../../protocols/http';
 
 const mockRequest = (): HttpRequest => ({
@@ -64,5 +64,11 @@ describe('UpdatePersonByIdController', () => {
     updatePersonByIdSpy.result = null
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
+  });
+
+  test('should return 200 if UpdatePersonById returns a person', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok(mockPersonModel()))
   });
 });
