@@ -28,6 +28,7 @@ export const mockPersonModel = (): PersonModel => ({
 })
 
 export const mockUpdatePersonParams = (): UpdatePersonParams => ({
+  id: 'any_id',
   nome: 'any_nome',
   dataNascimento: 'any_dataNascimento',
   paisNascimento: 'any_paisNascimento',
