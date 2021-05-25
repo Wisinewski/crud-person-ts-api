@@ -1,3 +1,4 @@
+import { badRequest } from './../../helpers/http-helper';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Validation } from './../../protocols/validation';
 import { Controller } from './../../protocols/controller';
@@ -8,7 +9,10 @@ export class UpdatePersonByIdController implements Controller {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    await this.validation.validate(httpRequest.body)
+    const error = await this.validation.validate(httpRequest.body)
+    if (error) {
+      return badRequest(error)
+    }
     return null
   }
 }
