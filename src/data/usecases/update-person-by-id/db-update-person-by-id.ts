@@ -7,8 +7,8 @@ export class DbUpdatePersonById implements UpdatePersonById {
     private readonly updatePersonByIdRepository: UpdatePersonByIdRepository
   ) {}
 
-  async update (person: UpdatePersonParams): Promise<PersonModel> {
-    await this.updatePersonByIdRepository.updateById(person)
-    return null
+  async update (personData: UpdatePersonParams): Promise<PersonModel> {
+    const person = await this.updatePersonByIdRepository.updateById(personData)
+    return person
   }
 }
