@@ -1,8 +1,10 @@
+import { personsSchema } from './schemas/persons-schema';
 import { updatePersonByIdParamsSchema } from './schemas/update-person-params-schema';
 import { addPersonParamsSchema, personSchema, errorSchema, deletePersonByIdParamsSchema } from './schemas/index';
 
 export default {
   person: personSchema,
+  persons: personsSchema,
   addPersonParams: addPersonParamsSchema,
   deletePersonByIdParams: deletePersonByIdParamsSchema,
   updatePersonByIdParams: updatePersonByIdParamsSchema,
