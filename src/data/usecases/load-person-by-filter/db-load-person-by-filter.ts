@@ -8,7 +8,7 @@ export class DbLoadPersonByFilter implements LoadPersonByFilter {
   ) {}
 
   async load (params: FilterPersonParams): Promise<PersonModel[]> {
-    await this.loadPersonByFilterRepository.loadByFilter(params)
-    return null
+    const persons = await this.loadPersonByFilterRepository.loadByFilter(params)
+    return persons
   }
 }
