@@ -1,3 +1,4 @@
+import { LoadPersonByFilter, FilterPersonParams } from './../../domain/usecases/load-person-by-filter';
 import { UpdatePersonById, UpdatePersonParams } from './../../domain/usecases/update-person-by-id';
 import { DeletePersonById } from './../../domain/usecases/delete-person-by-id';
 import { LoadPersonByCpf } from './../../domain/usecases/load-person-by-cpf';
@@ -37,6 +38,15 @@ export class UpdatePersonByIdSpy implements UpdatePersonById {
   result: PersonModel = mockPersonModel()
   async update (person: UpdatePersonParams): Promise<PersonModel> {
     this.person = person
+    return this.result
+  }
+}
+
+export class LoadPersonByFilterSpy implements LoadPersonByFilter {
+  params: FilterPersonParams
+  result: PersonModel[] = [mockPersonModel(), mockPersonModel()]
+  async load (params: FilterPersonParams): Promise<PersonModel[]> {
+    this.params = params
     return this.result
   }
 }
