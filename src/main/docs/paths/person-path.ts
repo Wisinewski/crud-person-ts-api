@@ -37,27 +37,58 @@ export const personPath = {
     }
   },
 
-  delete: {
+  get: {
     tags: ['Pessoa'],
-    summary: 'API para remover uma pessoa pelo ID',
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/schemas/deletePersonByIdParams'
+    summary: 'API para consultar os dados de pessoas por filtro',
+    parameters: [{
+      in: 'query',
+      name: 'nome',
+      schema: {
+        type: 'string'
+      }
+    }, {
+      in: 'query',
+      name: 'cpf',
+      schema: {
+        type: 'string'
+      }
+    }, {
+      in: 'query',
+      name: 'dataNascimento',
+      schema: {
+        type: 'string'
+      }
+    }, {
+      in: 'query',
+      name: 'paisNascimento',
+      schema: {
+        type: 'string'
+      }
+    }, {
+      in: 'query',
+      name: 'estadoNascimento',
+      schema: {
+        type: 'string'
+      }
+    }, {
+      in: 'query',
+      name: 'cidadeNascimento',
+      schema: {
+        type: 'string'
+      }
+    }],
+    responses: {
+      200: {
+        description: 'Sucesso',
+        content: {
+          'application/json': {
+            schema: {
+              name: 'id',
+              required: true,
+              $ref: '#/schemas/persons'
+            }
           }
         }
-      }
-    },
-    responses: {
-      204: {
-        $ref: '#/components/noContent'
-      },
-      400: {
-        $ref: '#/components/badRequest'
-      },
-      403: {
-        $ref: '#/components/forbidden'
       },
       404: {
         $ref: '#/components/notFound'
@@ -90,6 +121,37 @@ export const personPath = {
             }
           }
         }
+      },
+      400: {
+        $ref: '#/components/badRequest'
+      },
+      403: {
+        $ref: '#/components/forbidden'
+      },
+      404: {
+        $ref: '#/components/notFound'
+      },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  },
+
+  delete: {
+    tags: ['Pessoa'],
+    summary: 'API para remover uma pessoa pelo ID',
+    requestBody: {
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/schemas/deletePersonByIdParams'
+          }
+        }
+      }
+    },
+    responses: {
+      204: {
+        $ref: '#/components/noContent'
       },
       400: {
         $ref: '#/components/badRequest'
