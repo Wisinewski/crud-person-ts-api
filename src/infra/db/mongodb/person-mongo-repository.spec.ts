@@ -139,7 +139,7 @@ describe('PersonMongoRepository', () => {
       expect(persons[1].id).toBeTruthy()
     });
 
-    test('should return just one person ', async () => {
+    test('should return just one person if receives a param', async () => {
       await personCollection.insertMany([{
         nome: 'any_nome',
         cpf: 'any_cpf',
@@ -167,6 +167,23 @@ describe('PersonMongoRepository', () => {
       const persons = await sut.loadByFilter(params)
       expect(persons.length).toBe(1)
       expect(persons[0].id).toBeTruthy()
+    });
+
+    test('should return an empty list if no person matches with the received param', async () => {
+      await personCollection.insertMany([{
+        nome: 'any_nome',
+        cpf: 'any_cpf',
+        dataNascimento: 'any_dataNascimento',
+        paisNascimento: 'any_paisNascimento',
+        estadoNascimento: 'any_estadoNascimento',
+        cidadeNascimento: 'any_cidadeNascimento',
+        email: 'any_emailNascimento',
+        nomePai: 'any_nomePai',
+        nomeMae: 'any_nomeMae'
+      }])
+      const { sut } = makeSut()
+      const persons = await sut.loadByFilter({ nome: 'other_nome' })
+      expect(persons.length).toBe(0)
     });
   });
 });
