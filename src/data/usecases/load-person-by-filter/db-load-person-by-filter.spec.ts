@@ -1,7 +1,7 @@
 import { throwError } from './../../../domain/test/test-helper';
 import { LoadPersonByFilterRepositorySpy } from './../../test/mock-db-person';
 import { DbLoadPersonByFilter } from './db-load-person-by-filter';
-import { mockFilterPersonParams } from './../../../domain/test/mock-person';
+import { mockFilterPersonParams, mockPersonModel } from './../../../domain/test/mock-person';
 
 type SutTypes = {
   sut: DbLoadPersonByFilter
@@ -30,5 +30,11 @@ describe('DbLoadPersonByFilter', () => {
     jest.spyOn(loadPersonByFilterRepositorySpy, 'loadByFilter').mockImplementationOnce(throwError)
     const promise = sut.load(mockFilterPersonParams())
     await expect(promise).rejects.toThrow()
+  });
+
+  test('should return a list of persons on success', async () => {
+    const { sut } = makeSut()
+    const persons = await sut.load(mockFilterPersonParams())
+    expect(persons).toEqual([mockPersonModel(), mockPersonModel()])
   });
 });
