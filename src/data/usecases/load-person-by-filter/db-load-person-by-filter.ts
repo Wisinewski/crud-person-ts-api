@@ -8,7 +8,14 @@ export class DbLoadPersonByFilter implements LoadPersonByFilter {
   ) {}
 
   async load (params: FilterPersonParams): Promise<PersonModel[]> {
-    const persons = await this.loadPersonByFilterRepository.loadByFilter(params)
+    const query = {}
+    if (params.nome) query['nome'] = params.nome
+    if (params.cpf) query['cpf'] = params.cpf
+    if (params.dataNascimento) query['dataNascimento'] = params.dataNascimento
+    if (params.paisNascimento) query['paisNascimento'] = params.paisNascimento
+    if (params.estadoNascimento) query['estadoNascimento'] = params.estadoNascimento
+    if (params.cidadeNascimento) query['cidadeNascimento'] = params.cidadeNascimento
+    const persons = await this.loadPersonByFilterRepository.loadByFilter(query)
     return persons
   }
 }
