@@ -108,4 +108,35 @@ describe('PersonMongoRepository', () => {
       expect(updatedPerson).toBeFalsy()
     });
   });
+
+  describe('loadByFilter', () => {
+    test('should return all persons', async () => {
+      await personCollection.insertMany([{
+        nome: 'any_nome',
+        cpf: 'any_cpf',
+        dataNascimento: 'any_dataNascimento',
+        paisNascimento: 'any_paisNascimento',
+        estadoNascimento: 'any_estadoNascimento',
+        cidadeNascimento: 'any_cidadeNascimento',
+        email: 'any_emailNascimento',
+        nomePai: 'any_nomePai',
+        nomeMae: 'any_nomeMae'
+      }, {
+        nome: 'other_nome',
+        cpf: 'other_cpf',
+        dataNascimento: 'other_dataNascimento',
+        paisNascimento: 'other_paisNascimento',
+        estadoNascimento: 'other_estadoNascimento',
+        cidadeNascimento: 'other_cidadeNascimento',
+        email: 'other_emailNascimento',
+        nomePai: 'other_nomePai',
+        nomeMae: 'other_nomeMae'
+      }])
+      const { sut } = makeSut()
+      const persons = await sut.loadByFilter({})
+      expect(persons.length).toBe(2)
+      expect(persons[0].id).toBeTruthy()
+      expect(persons[1].id).toBeTruthy()
+    });
+  });
 });
