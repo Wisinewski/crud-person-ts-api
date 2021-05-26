@@ -1,14 +1,16 @@
+import { PersonModel } from './../../../domain/models/person';
+import { FilterPersonParams } from './../../../domain/usecases/load-person-by-filter';
+import { LoadPersonByFilterRepository } from './../../../data/protocols/db/load-person-by-filter-repository';
 import { UpdatePersonParams } from './../../../domain/usecases/update-person-by-id';
 import { UpdatePersonByIdRepository } from './../../../data/protocols/db/update-person-by-id-repository';
 import { AddPersonParams } from './../../../domain/usecases/add-person';
 import { AddPersonRepository } from './../../../data/protocols/db/add-person-repository';
 import { MongoHelper } from './helpers/mongo-helper';
-import { PersonModel } from '../../../domain/models/person';
 import { LoadPersonByCpfRepository } from '../../../data/protocols/db/load-person-by-cpf-repository';
 import { DeletePersonByIdRepository } from '../../../data/protocols/db/delete-person-by-id-repository';
 import { ObjectId } from 'bson';
 
-export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPersonRepository, DeletePersonByIdRepository, UpdatePersonByIdRepository {
+export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPersonRepository, DeletePersonByIdRepository, UpdatePersonByIdRepository, LoadPersonByFilterRepository {
   async loadByCpf (cpf: string): Promise<PersonModel> {
     const personCollection = await MongoHelper.getCollection('persons')
     const person = await personCollection.findOne({ cpf })
@@ -47,5 +49,11 @@ export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPers
       returnOriginal: false
     })
     return person.value ? MongoHelper.map(person.value) : null
+  }
+
+  async loadByFilter (params: FilterPersonParams): Promise<PersonModel[]> {
+    const personCollection = await MongoHelper.getCollection('persons')
+    const persons = await personCollection.find(params).toArray()
+    return MongoHelper.mapCollection(persons)
   }
 }
