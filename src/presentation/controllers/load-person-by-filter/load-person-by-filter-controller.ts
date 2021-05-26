@@ -1,4 +1,4 @@
-import { serverError, noContent } from './../../helpers/http-helper';
+import { serverError, noContent, ok } from './../../helpers/http-helper';
 import { LoadPersonByFilter } from './../../../domain/usecases/load-person-by-filter';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Controller } from './../../protocols/controller';
@@ -14,7 +14,7 @@ export class LoadPersonByFilterController implements Controller {
       if (persons.length === 0) {
         return noContent()
       }
-      return null
+      return ok(persons)
     } catch (error) {
       return serverError(error)
     }
