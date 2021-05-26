@@ -1,4 +1,4 @@
-import { serverError } from './../../helpers/http-helper';
+import { serverError, noContent } from './../../helpers/http-helper';
 import { throwError } from './../../../domain/test/test-helper';
 import { LoadPersonByFilterSpy } from './../../test/mock-person';
 import { LoadPersonByFilterController } from './load-person-by-filter-controller';
@@ -42,5 +42,12 @@ describe('LoadPersonByFilterController', () => {
     jest.spyOn(loadPersonByFilterSpy, 'load').mockImplementationOnce(throwError)
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  });
+
+  test('should return 204 if LoadPersonByFilter returns an empty list', async () => {
+    const { sut, loadPersonByFilterSpy } = makeSut()
+    loadPersonByFilterSpy.result = []
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(noContent())
   });
 });
