@@ -1,4 +1,5 @@
-import { serverError, noContent } from './../../helpers/http-helper';
+import { mockPersonModel } from './../../../domain/test/mock-person';
+import { serverError, noContent, ok } from './../../helpers/http-helper';
 import { throwError } from './../../../domain/test/test-helper';
 import { LoadPersonByFilterSpy } from './../../test/mock-person';
 import { LoadPersonByFilterController } from './load-person-by-filter-controller';
@@ -49,5 +50,11 @@ describe('LoadPersonByFilterController', () => {
     loadPersonByFilterSpy.result = []
     const httpResponse = await sut.handle(mockRequest())
     expect(httpResponse).toEqual(noContent())
+  });
+
+  test('should return 200 if LoadPersonByFilter returns a list of persons', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok([mockPersonModel(), mockPersonModel()]))
   });
 });
