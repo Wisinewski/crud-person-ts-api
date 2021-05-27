@@ -41,7 +41,7 @@ describe('PersonMongoRepository', () => {
       expect(person.nome).toBe(personParams.nome)
       expect(person.email).toBe(personParams.email)
       expect(person.cpf).toBe(personParams.cpf)
-      expect(person.dataNascimento).toBe(personParams.dataNascimento)
+      expect(person.dataNascimento).toEqual(personParams.dataNascimento)
       expect(person.paisNascimento).toBe(personParams.paisNascimento)
       expect(person.estadoNascimento).toBe(personParams.estadoNascimento)
       expect(person.cidadeNascimento).toBe(personParams.cidadeNascimento)
