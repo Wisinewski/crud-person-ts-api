@@ -23,4 +23,11 @@ describe('EmailValidation', () => {
     const error = sut.validate({ dataNascimento: '2021-01-01' })
     expect(error).toEqual(new InvalidParamError('dataNascimento'))
   });
+
+  test('should call DateValidator with correct value', async () => {
+    const { sut, dateValidatorSpy } = makeSut()
+    const dataNascimento = '2021-01-01'
+    sut.validate({ dataNascimento })
+    expect(dateValidatorSpy.date).toBe(dataNascimento)
+  });
 });
