@@ -26,4 +26,11 @@ describe('DateValidatorAdapter', () => {
     sut.isValid(date)
     expect(isDateSpy).toHaveBeenCalledWith(date)
   });
+
+  test('should returns false if validator returns false', () => {
+    const { sut } = makeSut()
+    jest.spyOn(validator, 'isISO8601').mockReturnValueOnce(false)
+    const isValid = sut.isValid('2021-01-01')
+    expect(isValid).toBe(false)
+  });
 });
