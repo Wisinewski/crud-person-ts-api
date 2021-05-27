@@ -3,7 +3,7 @@ module.exports = {
     await db.collection('persons').insertMany([{
       nome: 'Eloá Emily Almeida',
       cpf: '56726002041',
-      dataNascimento: '06/03/1952',
+      dataNascimento: new Date('1952-03-06'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'MG',
       cidadeNascimento: 'Varginha',
@@ -13,7 +13,7 @@ module.exports = {
     }, {
       nome: 'Fabiana Benedita Rodrigues',
       cpf: '63887857607',
-      dataNascimento: '19/01/1977',
+      dataNascimento: new Date('1977-01-19'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'TO',
       cidadeNascimento: 'Gurupi',
@@ -23,7 +23,7 @@ module.exports = {
     }, {
       nome: 'Beatriz Vitória da Cunha',
       cpf: '50884906663',
-      dataNascimento: '10/07/1970',
+      dataNascimento: new Date('1970-07-10'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'AP',
       cidadeNascimento: 'Macapá',
@@ -33,7 +33,7 @@ module.exports = {
     }, {
       nome: 'Vicente Felipe Anthony Rodrigues',
       cpf: '07104373667',
-      dataNascimento: '19/10/1982',
+      dataNascimento: new Date('1982-10-19'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'SP',
       cidadeNascimento: 'São Paulo',
@@ -43,7 +43,7 @@ module.exports = {
     }, {
       nome: 'Aurora Cristiane Clara dos Santos',
       cpf: '38938277224',
-      dataNascimento: '25/03/2003',
+      dataNascimento: new Date('2003-03-25'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'ES',
       cidadeNascimento: 'Cariacica',
@@ -53,7 +53,7 @@ module.exports = {
     }, {
       nome: 'Cecília Luzia Assunção',
       cpf: '04612574591',
-      dataNascimento: '18/03/1977',
+      dataNascimento: new Date('1977-03-18'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'RN',
       cidadeNascimento: 'Natal',
@@ -63,7 +63,7 @@ module.exports = {
     }, {
       nome: 'Teresinha Juliana Adriana Farias',
       cpf: '78892252291',
-      dataNascimento: '14/06/1952',
+      dataNascimento: new Date('1952-06-14'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'SP',
       cidadeNascimento: 'Piracicaba',
@@ -73,7 +73,7 @@ module.exports = {
     }, {
       nome: 'Carlos Bernardo Peixoto',
       cpf: '36678191021',
-      dataNascimento: '09/09/1983',
+      dataNascimento: new Date('1983-09-09'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'TO',
       cidadeNascimento: 'Araguaína',
@@ -83,7 +83,7 @@ module.exports = {
     }, {
       nome: 'Elias Nelson Alves',
       cpf: '46462367377',
-      dataNascimento: '09/01/1961',
+      dataNascimento: new Date('1961-01-09'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'ES',
       cidadeNascimento: 'Vila Velha',
@@ -93,7 +93,7 @@ module.exports = {
     }, {
       nome: 'Daniela Joana da Mata',
       cpf: '88152602779',
-      dataNascimento: '23/08/1982',
+      dataNascimento: new Date('1982-08-23'),
       paisNascimento: 'Brasil',
       estadoNascimento: 'PA',
       cidadeNascimento: 'Belém',
