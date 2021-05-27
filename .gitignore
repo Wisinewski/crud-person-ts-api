@@ -2,3 +2,5 @@
 node_modules
 dist
 globalConfig.json
+coverage
+!src/data

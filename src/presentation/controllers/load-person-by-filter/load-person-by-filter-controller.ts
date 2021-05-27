@@ -11,9 +11,6 @@ export class LoadPersonByFilterController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const persons = await this.loadPersonByFilter.load(httpRequest.query)
-      if (persons.length === 0) {
-        return noContent()
-      }
       return ok(persons)
     } catch (error) {
       return serverError(error)

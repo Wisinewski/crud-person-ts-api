@@ -3,7 +3,7 @@ import { ServerError } from './../../errors/server-error';
 import { throwError } from './../../../domain/test/test-helper';
 import { DeletePersonByIdSpy } from './../../test/mock-person';
 import { MissingParamError } from './../../errors/missing-param-error';
-import { badRequest, serverError, forbidden, noContent } from './../../helpers/http-helper';
+import { badRequest, serverError, noContent, notFound } from './../../helpers/http-helper';
 import { DeletePersonByIdController } from './delete-person-by-id-controller';
 import { ValidationSpy } from '../../test/mock-validation';
 import { HttpRequest } from './../../protocols/http';
@@ -65,7 +65,7 @@ describe('DeletePersonByIdController', () => {
     const { sut, deletePersonByIdSpy } = makeSut()
     deletePersonByIdSpy.result = false
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
+    expect(httpResponse).toEqual(notFound(new InvalidParamError('id')))
   });
 
   test('should return 204 if DeletePersonById returns true', async () => {

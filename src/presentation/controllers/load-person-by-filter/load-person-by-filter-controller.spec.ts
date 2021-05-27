@@ -45,13 +45,6 @@ describe('LoadPersonByFilterController', () => {
     expect(httpResponse).toEqual(serverError(new Error()))
   });
 
-  test('should return 204 if LoadPersonByFilter returns an empty list', async () => {
-    const { sut, loadPersonByFilterSpy } = makeSut()
-    loadPersonByFilterSpy.result = []
-    const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(noContent())
-  });
-
   test('should return 200 if LoadPersonByFilter returns a list of persons', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
