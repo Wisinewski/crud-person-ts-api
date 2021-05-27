@@ -12,8 +12,8 @@ export const personPath = {
       }
     },
     responses: {
-      200: {
-        description: 'Sucesso',
+      201: {
+        description: 'Criado',
         content: {
           'application/json': {
             schema: {
