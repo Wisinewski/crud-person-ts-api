@@ -2,7 +2,7 @@ export type PersonModel = {
   id: string
   nome: string
   cpf: string
-  dataNascimento: string
+  dataNascimento: Date
   paisNascimento: string
   estadoNascimento: string
   cidadeNascimento: string
