@@ -43,7 +43,7 @@ export const mockUpdatePersonParams = (): UpdatePersonParams => ({
 export const mockFilterPersonParams = (): FilterPersonParams => ({
   nome: 'any_nome',
   cpf: 'any_cpf',
-  dataNascimento: 'any_dataNascimento',
+  dataNascimento: new Date('2021-01-01'),
   paisNascimento: 'any_paisNascimento',
   estadoNascimento: 'any_estadoNascimento',
   cidadeNascimento: 'any_cidadeNascimento'
