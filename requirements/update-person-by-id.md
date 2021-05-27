@@ -13,5 +13,5 @@
 1. Retorna erro **404** se a API não existir
 2. Retorna erro **400** se nome, data nascimento, país nascimento, estado nascimento ou cidade nascimento não forem fornecidos
 3. Retorna erro **400** se o campo email for um e-mail inválido
-4. Retorna erro **403** se o id fornecido for inválido
+4. Retorna erro **404** se o id fornecido for inválido
 5. Retorna erro **500** se der erro ao tentar cadastrar a pessoa
