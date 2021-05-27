@@ -2,7 +2,7 @@ import { ValidationSpy } from './../../test/mock-validation';
 import { MissingParamError } from './../../errors/missing-param-error';
 import { CpfInUseError } from './../../errors/cpf-in-use-error';
 import { ServerError } from './../../errors/server-error';
-import { serverError, forbidden, badRequest, created } from './../../helpers/http-helper';
+import { serverError, badRequest, created, conflict } from './../../helpers/http-helper';
 import { throwError } from './../../../domain/test/test-helper';
 import { AddPersonSpy } from './../../test/mock-person';
 import { AddPersonController } from './add-person-controller';
@@ -67,7 +67,7 @@ describe('AddPersonController', () => {
     addPersonSpy.result = null
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(forbidden(new CpfInUseError()))
+    expect(httpResponse).toEqual(conflict(new CpfInUseError()))
   });
 
   test('should return 200 if valid data is provided', async () => {
