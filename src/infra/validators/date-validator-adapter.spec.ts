@@ -33,4 +33,10 @@ describe('DateValidatorAdapter', () => {
     const isValid = sut.isValid('2021-01-01')
     expect(isValid).toBe(false)
   });
+
+  test('should returns true if validator returns true', () => {
+    const { sut } = makeSut()
+    const isValid = sut.isValid('2021-01-01')
+    expect(isValid).toBe(true)
+  });
 });
