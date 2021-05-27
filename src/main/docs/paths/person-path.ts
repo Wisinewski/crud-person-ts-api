@@ -12,8 +12,8 @@ export const personPath = {
       }
     },
     responses: {
-      200: {
-        description: 'Sucesso',
+      201: {
+        description: 'Criado',
         content: {
           'application/json': {
             schema: {
@@ -25,11 +25,11 @@ export const personPath = {
       400: {
         $ref: '#/components/badRequest'
       },
-      403: {
-        $ref: '#/components/forbidden'
-      },
       404: {
         $ref: '#/components/notFound'
+      },
+      409: {
+        $ref: '#/components/conflict'
       },
       500: {
         $ref: '#/components/serverError'
@@ -125,9 +125,6 @@ export const personPath = {
       400: {
         $ref: '#/components/badRequest'
       },
-      403: {
-        $ref: '#/components/forbidden'
-      },
       404: {
         $ref: '#/components/notFound'
       },
@@ -155,9 +152,6 @@ export const personPath = {
       },
       400: {
         $ref: '#/components/badRequest'
-      },
-      403: {
-        $ref: '#/components/forbidden'
       },
       404: {
         $ref: '#/components/notFound'

@@ -1,6 +1,6 @@
 import { InvalidParamError } from './../../errors/invalid-param-error';
 import { UpdatePersonById } from './../../../domain/usecases/update-person-by-id';
-import { badRequest, serverError, forbidden, ok } from './../../helpers/http-helper';
+import { badRequest, serverError, ok, notFound } from './../../helpers/http-helper';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Validation } from './../../protocols/validation';
 import { Controller } from './../../protocols/controller';
@@ -30,7 +30,7 @@ export class UpdatePersonByIdController implements Controller {
         nomeMae
       })
       if (!person) {
-        return forbidden(new InvalidParamError('id'))
+        return notFound(new InvalidParamError('id'))
       }
       return ok(person)
     } catch (error) {

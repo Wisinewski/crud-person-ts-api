@@ -1,7 +1,6 @@
-import { MissingParamError } from './../../errors/missing-param-error';
 import { Validation } from './../../protocols/validation';
 import { CpfInUseError } from './../../errors/cpf-in-use-error';
-import { serverError, forbidden, ok, badRequest } from './../../helpers/http-helper';
+import { serverError, badRequest, created, conflict } from './../../helpers/http-helper';
 import { AddPerson } from './../../../domain/usecases/add-person';
 import { HttpRequest, HttpResponse } from './../../protocols/http';
 import { Controller } from './../../protocols/controller';
@@ -31,9 +30,9 @@ export class AddPersonController implements Controller {
         nomeMae
       })
       if (!person) {
-        return forbidden(new CpfInUseError())
+        return conflict(new CpfInUseError())
       }
-      return ok(person)
+      return created(person)
     } catch (error) {
       return serverError(error)
     }
