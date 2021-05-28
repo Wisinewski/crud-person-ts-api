@@ -25,6 +25,13 @@ describe('DbLoadPersonByFilter', () => {
     expect(loadPersonByFilterRepositorySpy.params).toEqual(filterParams)
   });
 
+  test('should call LoadPersonByFilterRepository without values', async () => {
+    const { sut, loadPersonByFilterRepositorySpy } = makeSut()
+    const filterParams = {}
+    await sut.load(filterParams)
+    expect(loadPersonByFilterRepositorySpy.params).toEqual(filterParams)
+  });
+
   test('should throw if LoadPersonByFilterRepository throws', async () => {
     const { sut, loadPersonByFilterRepositorySpy } = makeSut()
     jest.spyOn(loadPersonByFilterRepositorySpy, 'loadByFilter').mockImplementationOnce(throwError)
