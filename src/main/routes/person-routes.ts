@@ -9,7 +9,7 @@ import { Router } from "express";
 export default (router: Router): void => {
   router.post('/persons', adaptRoute(makeAddPersonController()))
   router.get('/persons', adaptRoute(makeLoadPersonByFilterController()))
-  router.put('/persons', adaptRoute(makeUpdatePersonByIdController()))
+  router.put('/persons/:id', adaptRoute(makeUpdatePersonByIdController()))
   router.delete('/persons', adaptRoute(makeDeletePersonByIdController()))
   router.get('/persons/:cpf', adaptRoute(makeLoadPersonByCpfController()))
 }

@@ -46,7 +46,8 @@ export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPers
         nomeMae: personData.nomeMae
       }
     }, {
-      returnOriginal: false
+      returnOriginal: false,
+      upsert: false
     })
     return person.value ? MongoHelper.map(person.value) : null
   }

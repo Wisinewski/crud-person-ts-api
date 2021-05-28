@@ -17,16 +17,17 @@ export class UpdatePersonByIdController implements Controller {
       if (error) {
         return badRequest(error)
       }
-      const { id, nome, dataNascimento, paisNascimento, estadoNascimento, cidadeNascimento, email, nomePai, nomeMae } = httpRequest.body
+      const { id } = httpRequest.params
+      const { nome, dataNascimento, paisNascimento, estadoNascimento, cidadeNascimento, email, nomePai, nomeMae } = httpRequest.body
       const person = await this.updatePersonById.update({
-        id, 
-        nome, 
-        dataNascimento, 
-        paisNascimento, 
-        estadoNascimento, 
-        cidadeNascimento, 
-        email, 
-        nomePai, 
+        id,
+        nome,
+        dataNascimento,
+        paisNascimento,
+        estadoNascimento,
+        cidadeNascimento,
+        email,
+        nomePai,
         nomeMae
       })
       if (!person) {
