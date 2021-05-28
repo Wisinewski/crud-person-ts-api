@@ -11,7 +11,7 @@ describe('UpdatePersonByIdValidationFactory', () => {
   test('should call ValidationComposite with all validations', () => {
     makeUpdatePersonByIdValidation()
     const validations: Validation[] = []
-    for (const field of ['id', 'nome', 'dataNascimento', 'paisNascimento', 'estadoNascimento', 'cidadeNascimento', 'email']) {
+    for (const field of ['nome', 'dataNascimento', 'paisNascimento', 'estadoNascimento', 'cidadeNascimento', 'email']) {
       validations.push(new RequiredFieldValidation(field))
     }
     validations.push(new EmailValidation('email', new EmailValidatorAdapter()))

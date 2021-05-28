@@ -9,7 +9,7 @@ import { ValidationSpy } from '../../test/mock-validation';
 import { HttpRequest } from './../../protocols/http';
 
 const mockRequest = (): HttpRequest => ({
-  body: {
+  params: {
     id: 'any_id'
   }
 })
@@ -36,7 +36,7 @@ describe('DeletePersonByIdController', () => {
     const { sut, validationSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(validationSpy.data).toEqual(httpRequest.body)
+    expect(validationSpy.data).toEqual(httpRequest.params)
   });
 
   test('should return 400 if Validation returns an error', async () => {
@@ -51,7 +51,7 @@ describe('DeletePersonByIdController', () => {
     const { sut, deletePersonByIdSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(deletePersonByIdSpy.id).toBe(httpRequest.body.id)
+    expect(deletePersonByIdSpy.id).toBe(httpRequest.params.id)
   });
 
   test('should return 500 if DeletePersonById throws', async () => {

@@ -6,7 +6,7 @@ import { ValidationComposite } from './../../../../validation/validators/validat
 
 export const makeUpdatePersonByIdValidation = (): ValidationComposite => {
   const validations: Validation[] = []
-  for (const field of ['id', 'nome', 'dataNascimento', 'paisNascimento', 'estadoNascimento', 'cidadeNascimento', 'email']) {
+  for (const field of ['nome', 'dataNascimento', 'paisNascimento', 'estadoNascimento', 'cidadeNascimento', 'email']) {
     validations.push(new RequiredFieldValidation(field))
   }
   validations.push(new EmailValidation('email', new EmailValidatorAdapter()))

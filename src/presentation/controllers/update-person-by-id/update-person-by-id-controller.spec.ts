@@ -5,11 +5,23 @@ import { MissingParamError } from './../../errors/missing-param-error';
 import { badRequest, serverError, ok, notFound } from './../../helpers/http-helper';
 import { UpdatePersonByIdController } from './update-person-by-id-controller';
 import { ValidationSpy } from './../../test/mock-validation';
-import { mockUpdatePersonParams, mockPersonModel } from './../../../domain/test/mock-person';
+import { mockPersonModel } from './../../../domain/test/mock-person';
 import { HttpRequest } from './../../protocols/http';
 
 const mockRequest = (): HttpRequest => ({
-  body: mockUpdatePersonParams()
+  params: {
+    id: 'any_id'
+  },
+  body: {
+    nome: 'any_nome',
+    dataNascimento: new Date('2021-01-01'),
+    paisNascimento: 'any_paisNascimento',
+    estadoNascimento: 'any_estadoNascimento',
+    cidadeNascimento: 'any_cidadeNascimento',
+    email: 'any_emailNascimento',
+    nomePai: 'any_nomePai',
+    nomeMae: 'any_nomeMae'
+  }
 })
 
 type SutTypes = {
@@ -49,7 +61,7 @@ describe('UpdatePersonByIdController', () => {
     const { sut, updatePersonByIdSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(updatePersonByIdSpy.person).toEqual(httpRequest.body)
+    expect(updatePersonByIdSpy.person).toEqual(Object.assign({}, httpRequest.body, httpRequest.params))
   });
 
   test('should return 500 if UpdatePersonById throws', async () => {

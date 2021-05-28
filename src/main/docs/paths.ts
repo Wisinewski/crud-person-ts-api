@@ -1,6 +1,6 @@
-import { personPath, loadPersonByCpfPath } from './paths/index';
+import { personPath, personParamPath } from './paths/index';
 
 export default {
   '/persons': personPath,
-  '/persons/{cpf}': loadPersonByCpfPath
+  '/persons/{id}': personParamPath
 }

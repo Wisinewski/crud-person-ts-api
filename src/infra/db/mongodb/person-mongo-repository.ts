@@ -46,7 +46,8 @@ export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPers
         nomeMae: personData.nomeMae
       }
     }, {
-      returnOriginal: false
+      returnOriginal: false,
+      upsert: false
     })
     return person.value ? MongoHelper.map(person.value) : null
   }
@@ -55,5 +56,11 @@ export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPers
     const personCollection = await MongoHelper.getCollection('persons')
     const persons = await personCollection.find(params).toArray()
     return MongoHelper.mapCollection(persons)
+  }
+
+  async loadById (id: string): Promise<PersonModel> {
+    const personCollection = await MongoHelper.getCollection('persons')
+    const person = await personCollection.findOne({ _id: new ObjectId(id) })
+    return person && MongoHelper.map(person)
   }
 }
