@@ -1,2 +1,2 @@
 export * from './person-path'
-export * from './load-person-by-cpf-path'
+export * from './person-param-path'

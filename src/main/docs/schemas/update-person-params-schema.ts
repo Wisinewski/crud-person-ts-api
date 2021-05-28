@@ -1,9 +1,6 @@
 export const updatePersonByIdParamsSchema = {
   type: 'object',
   properties: {
-    id: {
-      type: 'string'
-    },
     nome: {
       type: 'string'
     },

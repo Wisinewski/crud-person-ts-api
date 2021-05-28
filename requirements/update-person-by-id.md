@@ -2,7 +2,7 @@
 
 > ## Caso de sucesso
 
-1. Recebe uma requisição do tipo **PUT** na rota **/api/persons**
+1. Recebe uma requisição do tipo **PUT** na rota **/api/persons/{id}**
 2. Valida dados obrigatórios **nome**, **data nascimento**, **país nascimento**, **estado nascimento**, **cidade nascimento** e **email**
 3. Valida se o campo **email** é um e-mail válido
 4. **Atualiza** uma pessoa com os dados fornecidos
