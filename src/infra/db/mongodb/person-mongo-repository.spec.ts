@@ -206,5 +206,11 @@ describe('PersonMongoRepository', () => {
       expect(person.nomeMae).toBe(personParams.nomeMae)
       expect(person.nomePai).toBe(personParams.nomePai)
     });
+
+    test('should return null if loadById fails', async () => {
+      const { sut } = makeSut()
+      const person = await sut.loadById('60afd9407935cd45905e2ae6')
+      expect(person).toBeFalsy()
+    });
   });
 });
