@@ -1,8 +1,6 @@
 import { MongoIdValidatorAdapter } from './mongo-id-validator-adapter';
 import validator from 'validator'
 
-jest.spyOn(validator, 'isMongoId').mockReturnValueOnce(true)
-
 type SutTypes = {
   sut: MongoIdValidatorAdapter
 }
@@ -27,5 +25,12 @@ describe('MongoIdValidatorAdapter', () => {
     jest.spyOn(validator, 'isMongoId').mockReturnValueOnce(false)
     const isValid = sut.isValid('any_id')
     expect(isValid).toBe(false)
+  });
+
+  test('should return true if validator returns true', () => {
+    const { sut } = makeSut()
+    jest.spyOn(validator, 'isMongoId').mockReturnValueOnce(true)
+    const isValid = sut.isValid('any_id')
+    expect(isValid).toBe(true)
   });
 });
