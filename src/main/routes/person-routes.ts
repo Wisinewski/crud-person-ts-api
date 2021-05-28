@@ -11,5 +11,5 @@ export default (router: Router): void => {
   router.get('/persons', adaptRoute(makeLoadPersonByFilterController()))
   router.get('/persons/:id', adaptRoute(makeLoadPersonByIdController()))
   router.put('/persons/:id', adaptRoute(makeUpdatePersonByIdController()))
-  router.delete('/persons', adaptRoute(makeDeletePersonByIdController()))
+  router.delete('/persons/:id', adaptRoute(makeDeletePersonByIdController()))
 }
