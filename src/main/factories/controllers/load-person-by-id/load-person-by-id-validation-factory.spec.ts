@@ -1,16 +1,13 @@
-import { makeLoadPersonByCpfValidation } from './load-person-by-cpf-validation-factory';
-import { CpfValidatorAdapter } from './../../../../infra/validators/cpf-validator-adapter';
-import { CpfValidation } from './../../../../validation/validators/cpf-validation';
+import { makeLoadPersonByIdValidation } from './load-person-by-id-validation-factory';
 import { ValidationComposite } from './../../../../validation/validators/validation-composite';
 import { Validation } from './../../../../presentation/protocols/validation';
 
 jest.mock('../../../../validation/validators/validation-composite')
 
-describe('LoadPersonByCpfValidationFactory', () => {
+describe('LoadPersonByIdValidationFactory', () => {
   test('should call ValidationComposite with all validations', () => {
-    makeLoadPersonByCpfValidation()
+    makeLoadPersonByIdValidation()
     const validations: Validation[] = []
-    validations.push(new CpfValidation('cpf', new CpfValidatorAdapter()))
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   });
 });

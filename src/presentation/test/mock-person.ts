@@ -1,7 +1,7 @@
+import { LoadPersonById } from './../../domain/usecases/load-person-by-id';
 import { LoadPersonByFilter, FilterPersonParams } from './../../domain/usecases/load-person-by-filter';
 import { UpdatePersonById, UpdatePersonParams } from './../../domain/usecases/update-person-by-id';
 import { DeletePersonById } from './../../domain/usecases/delete-person-by-id';
-import { LoadPersonByCpf } from './../../domain/usecases/load-person-by-cpf';
 import { mockPersonModel } from './../../domain/test/mock-person';
 import { PersonModel } from './../../domain/models/person';
 import { AddPerson, AddPersonParams } from './../../domain/usecases/add-person';
@@ -15,11 +15,11 @@ export class AddPersonSpy implements AddPerson {
   }
 }
 
-export class LoadPersonByCpfSpy implements LoadPersonByCpf {
-  cpf: string
+export class LoadPersonByIdSpy implements LoadPersonById {
+  id: string
   result: PersonModel = mockPersonModel()
-  async load (cpf: string): Promise<PersonModel> {
-    this.cpf = cpf
+  async load (id: string): Promise<PersonModel> {
+    this.id = id
     return this.result
   }
 }
