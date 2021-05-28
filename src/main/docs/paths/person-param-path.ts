@@ -1,10 +1,10 @@
 export const personParamPath = {
   get: {
     tags: ['Pessoa'],
-    summary: 'API para consultar os dados de uma pessoa pelo CPF',
+    summary: 'API para consultar os dados de uma pessoa pelo ID',
     parameters: [{
       in: 'path',
-      name: 'cpf',
+      name: 'id',
       required: true,
       schema: {
         type: 'string'
