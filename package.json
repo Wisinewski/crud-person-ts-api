@@ -12,7 +12,8 @@
     "test": "jest",
     "test:staged": "jest",
     "test:unit": "npm test -- --watch --runInBand",
-    "test:integration": "npm test -- --watch -c"
+    "test:integration": "npm test -- --watch -c",
+    "test:ci": "npm test -- --coverage"
   },
   "keywords": [],
   "author": "",
