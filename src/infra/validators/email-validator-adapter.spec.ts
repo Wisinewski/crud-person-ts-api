@@ -26,14 +26,14 @@ describe('EmailValidatorAdapter', () => {
     expect(isEmailSpy).toHaveBeenCalledWith('any_email@email.com')
   });
   
-  test('should returns false if validator returns false', () => {
+  test('should return false if validator returns false', () => {
     const { sut } = makeSut()
     jest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)
     const isValid = sut.isValid('any_email@email.com')
     expect(isValid).toBe(false)
   });
 
-  test('should returns true if validator returns true', () => {
+  test('should return true if validator returns true', () => {
     const { sut } = makeSut()
     const isValid = sut.isValid('any_email@email.com')
     expect(isValid).toBe(true)
