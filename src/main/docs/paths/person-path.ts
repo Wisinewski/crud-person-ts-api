@@ -97,33 +97,5 @@ export const personPath = {
         $ref: '#/components/serverError'
       }
     }
-  },
-
-  delete: {
-    tags: ['Pessoa'],
-    summary: 'API para remover uma pessoa pelo ID',
-    requestBody: {
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/schemas/deletePersonByIdParams'
-          }
-        }
-      }
-    },
-    responses: {
-      204: {
-        $ref: '#/components/noContent'
-      },
-      400: {
-        $ref: '#/components/badRequest'
-      },
-      404: {
-        $ref: '#/components/notFound'
-      },
-      500: {
-        $ref: '#/components/serverError'
-      }
-    }
   }
 }
