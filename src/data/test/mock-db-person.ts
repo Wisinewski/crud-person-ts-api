@@ -1,3 +1,4 @@
+import { LoadPersonByIdRepository } from './../protocols/db/load-person-by-id-repository';
 import { mockPersonModel } from './../../domain/test/mock-person';
 import { FilterPersonParams } from './../../domain/usecases/load-person-by-filter';
 import { LoadPersonByFilterRepository } from './../protocols/db/load-person-by-filter-repository';
@@ -50,6 +51,15 @@ export class LoadPersonByFilterRepositorySpy implements LoadPersonByFilterReposi
   result: PersonModel[] = [mockPersonModel(), mockPersonModel()]
   async loadByFilter (params: FilterPersonParams): Promise<PersonModel[]> {
     this.params = params
+    return this.result
+  }
+}
+
+export class LoadPersonByIdRepositorySpy implements LoadPersonByIdRepository {
+  id: string
+  result: PersonModel = mockPersonModel()
+  async loadById (id: string): Promise<PersonModel> {
+    this.id = id
     return this.result
   }
 }

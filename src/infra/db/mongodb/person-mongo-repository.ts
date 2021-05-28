@@ -57,4 +57,10 @@ export class PersonMongoRepository implements LoadPersonByCpfRepository, AddPers
     const persons = await personCollection.find(params).toArray()
     return MongoHelper.mapCollection(persons)
   }
+
+  async loadById (id: string): Promise<PersonModel> {
+    const personCollection = await MongoHelper.getCollection('persons')
+    const person = await personCollection.findOne({ _id: new ObjectId(id) })
+    return person && MongoHelper.map(person)
+  }
 }
