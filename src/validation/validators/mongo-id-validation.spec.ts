@@ -23,4 +23,11 @@ describe('MongoIdValidation', () => {
     const error = sut.validate({ id: 'any_id' })
     expect(error).toEqual(new InvalidParamError('id'))
   });
+
+  test('should call MongoIdValidator with correct value', async () => {
+    const { sut, mongoIdValidatorSpy } = makeSut()
+    const id = 'any_id'
+    sut.validate({ id })
+    expect(mongoIdValidatorSpy.mongoId).toBe(id)
+  });
 });
