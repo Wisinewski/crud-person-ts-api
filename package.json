@@ -1,6 +1,6 @@
 {
   "name": "crud-person-ts-api",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "test": "jest",
     "test:staged": "jest",
     "test:unit": "npm test -- --watch --runInBand",
-    "test:integration": "npm test -- --watch -c"
+    "test:integration": "npm test -- --watch -c",
+    "test:ci": "npm test -- --coverage"
   },
   "keywords": [],
   "author": "",
