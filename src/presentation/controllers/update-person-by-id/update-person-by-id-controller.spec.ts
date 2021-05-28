@@ -46,7 +46,7 @@ describe('UpdatePersonByIdController', () => {
     const { sut, validationSpy } = makeSut()
     const httpRequest = mockRequest()
     await sut.handle(httpRequest)
-    expect(validationSpy.data).toEqual(httpRequest.body)
+    expect(validationSpy.data).toEqual(Object.assign({}, httpRequest.body, httpRequest.params))
   });
 
   test('should return 400 if Validation returns an error', async () => {

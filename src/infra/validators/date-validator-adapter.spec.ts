@@ -27,14 +27,14 @@ describe('DateValidatorAdapter', () => {
     expect(isDateSpy).toHaveBeenCalledWith(date)
   });
 
-  test('should returns false if validator returns false', () => {
+  test('should return false if validator returns false', () => {
     const { sut } = makeSut()
     jest.spyOn(validator, 'isISO8601').mockReturnValueOnce(false)
     const isValid = sut.isValid('2021-01-01')
     expect(isValid).toBe(false)
   });
 
-  test('should returns true if validator returns true', () => {
+  test('should return true if validator returns true', () => {
     const { sut } = makeSut()
     const isValid = sut.isValid('2021-01-01')
     expect(isValid).toBe(true)
