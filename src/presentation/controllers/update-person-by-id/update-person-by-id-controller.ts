@@ -13,7 +13,7 @@ export class UpdatePersonByIdController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(Object.assign({}, httpRequest.body, httpRequest.params))
       if (error) {
         return badRequest(error)
       }
