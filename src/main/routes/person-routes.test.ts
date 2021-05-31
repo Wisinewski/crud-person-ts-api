@@ -82,4 +82,24 @@ describe('Survey Routes', () => {
         .expect(201)
     })
   })
+
+  describe('GET /persons', () => {
+    test('should return 200 on success', async () => {
+      await personCollection.insertOne({
+        nome: 'any_nome',
+        cpf: '71821165020',
+        dataNascimento: '2021-01-01',
+        paisNascimento: 'any_paisNascimento',
+        estadoNascimento: 'any_estadoNascimento',
+        cidadeNascimento: 'any_cidadeNascimento',
+        email: 'any_email@email.com',
+        nomePai: 'any_nomePai',
+        nomeMae: 'any_nomeMae'
+      })
+      await request(app)
+        .get('/api/persons')
+        .send({})
+        .expect(200)
+    });
+  });
 })
