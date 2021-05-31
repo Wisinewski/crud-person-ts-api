@@ -1,0 +1,40 @@
+import { mockAddPersonParams } from './../../domain/test/mock-person';
+import request from 'supertest';
+import { MongoHelper } from './../../infra/db/mongodb/helpers/mongo-helper';
+import { Collection } from 'mongodb';
+import app from '../config/app';
+
+let personCollection: Collection
+
+describe('Survey Routes', () => {
+  beforeAll(async () => {
+    await MongoHelper.connect(process.env.MONGO_URL)
+  })
+
+  afterAll(async () => {
+    await MongoHelper.disconnect()
+  })
+
+  beforeEach(async () => {
+    personCollection = await MongoHelper.getCollection('persons')
+    await personCollection.deleteMany({})
+  })
+
+  describe('POST /persons', () => {
+    test('should return 400 on add person without a required field', async () => {
+      await request(app)
+        .post('/api/persons')
+        .send({
+          cpf: '71821165020',
+          dataNascimento: '2021-01-01',
+          paisNascimento: 'any_paisNascimento',
+          estadoNascimento: 'any_estadoNascimento',
+          cidadeNascimento: 'any_cidadeNascimento',
+          email: 'any_email@email.com',
+          nomePai: 'any_nomePai',
+          nomeMae: 'any_nomeMae'
+        })
+        .expect(400)
+    })
+  })
+})
