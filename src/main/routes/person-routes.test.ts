@@ -136,4 +136,24 @@ describe('Survey Routes', () => {
         .expect(200)
     });
   });
+
+  describe('PUT /persons', () => {
+    test('should return 400 on update person with an invalid mongo id', async () => {
+      const id = 'any_cpf'
+      await request(app)
+        .put(`/api/persons/${id}`)
+        .send({
+          nome: 'any_nome',
+          cpf: 'invalid_cpf',
+          dataNascimento: '2021-01-01',
+          paisNascimento: 'any_paisNascimento',
+          estadoNascimento: 'any_estadoNascimento',
+          cidadeNascimento: 'any_cidadeNascimento',
+          email: 'any_email@email.com',
+          nomePai: 'any_nomePai',
+          nomeMae: 'any_nomeMae'
+        })
+        .expect(400)
+    });
+  });
 })
