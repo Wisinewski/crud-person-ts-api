@@ -36,5 +36,33 @@ describe('Survey Routes', () => {
         })
         .expect(400)
     })
+
+    test('should return 409 on add an existing person', async () => {
+      await personCollection.insertOne({
+        nome: 'any_nome',
+        cpf: '71821165020',
+        dataNascimento: '2021-01-01',
+        paisNascimento: 'any_paisNascimento',
+        estadoNascimento: 'any_estadoNascimento',
+        cidadeNascimento: 'any_cidadeNascimento',
+        email: 'any_email@email.com',
+        nomePai: 'any_nomePai',
+        nomeMae: 'any_nomeMae'
+      })
+      await request(app)
+        .post('/api/persons')
+        .send({
+          nome: 'any_nome',
+          cpf: '71821165020',
+          dataNascimento: '2021-01-01',
+          paisNascimento: 'any_paisNascimento',
+          estadoNascimento: 'any_estadoNascimento',
+          cidadeNascimento: 'any_cidadeNascimento',
+          email: 'any_email@email.com',
+          nomePai: 'any_nomePai',
+          nomeMae: 'any_nomeMae'
+        })
+        .expect(409)
+    })
   })
 })
