@@ -100,6 +100,15 @@ describe('Survey Routes', () => {
         .get('/api/persons')
         .send({})
         .expect(200)
+    })
+  })
+
+  describe('GET /persons/:id', () => {
+    test('should return 400 on get a person with an invalid mongo id', async () => {
+      const id = 'any_id'
+      await request(app)
+        .get(`/api/persons/${id}`)
+        .expect(400)
     });
   });
 })
