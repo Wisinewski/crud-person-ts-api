@@ -222,5 +222,23 @@ describe('Survey Routes', () => {
         })
         .expect(400)
     });
+
+    test('should return 404 on delete an inexistent person with an valid mongo id', async () => {
+      const id = '60afd9407935cd45905e2ae2'
+      await request(app)
+        .put(`/api/persons/${id}`)
+        .send({
+          nome: 'any_nome',
+          cpf: 'invalid_cpf',
+          dataNascimento: '2021-01-01',
+          paisNascimento: 'any_paisNascimento',
+          estadoNascimento: 'any_estadoNascimento',
+          cidadeNascimento: 'any_cidadeNascimento',
+          email: 'any_email@email.com',
+          nomePai: 'any_nomePai',
+          nomeMae: 'any_nomeMae'
+        })
+        .expect(404)
+    });
   });
 })
