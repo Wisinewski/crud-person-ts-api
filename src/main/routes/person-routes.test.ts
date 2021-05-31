@@ -110,5 +110,12 @@ describe('Survey Routes', () => {
         .get(`/api/persons/${id}`)
         .expect(400)
     });
+
+    test('should return 404 on get an inexistent person with an valid id', async () => {
+      const id = '60afd9407935cd45905e2ae2'
+      await request(app)
+        .get(`/api/persons/${id}`)
+        .expect(404)
+    });
   });
 })
