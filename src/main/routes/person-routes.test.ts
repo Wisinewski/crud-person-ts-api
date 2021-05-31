@@ -173,5 +173,34 @@ describe('Survey Routes', () => {
         })
         .expect(404)
     });
+
+    test('should return 200 on success', async () => {
+      const result = await personCollection.insertOne({
+        nome: 'any_nome',
+        cpf: '71821165020',
+        dataNascimento: '2021-01-01',
+        paisNascimento: 'any_paisNascimento',
+        estadoNascimento: 'any_estadoNascimento',
+        cidadeNascimento: 'any_cidadeNascimento',
+        email: 'any_email@email.com',
+        nomePai: 'any_nomePai',
+        nomeMae: 'any_nomeMae'
+      })
+      const person = result.ops[0]
+      await request(app)
+        .put(`/api/persons/${person._id}`)
+        .send({
+          nome: 'other_nome',
+          cpf: '71821165020',
+          dataNascimento: '2021-01-01',
+          paisNascimento: 'any_paisNascimento',
+          estadoNascimento: 'any_estadoNascimento',
+          cidadeNascimento: 'any_cidadeNascimento',
+          email: 'any_email@email.com',
+          nomePai: 'any_nomePai',
+          nomeMae: 'any_nomeMae'
+        })
+        .expect(200)
+    });
   });
 })
